@@ -1,5 +1,7 @@
 package model;
 
+import model.modelutils.Timerra;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,6 +12,10 @@ public class Sudoku extends Observable {
 	private Gelaxka[][] matrizea=new Gelaxka[9][9];
 
 	private HashMap<Integer, ArrayList<Gelaxka[][]>> matrizeak= new HashMap<Integer, ArrayList<Gelaxka[][]>>();
+
+	private int maila=0;
+
+	private int laguntzaKop=0;
 
 	private static Sudoku instantzia=new Sudoku();
 
@@ -42,8 +48,6 @@ public class Sudoku extends Observable {
 
 	public void setMatrizea(Gelaxka[][] matrizea) {
 		this.matrizea = matrizea;
-		setChanged();
-		notifyObservers(matrizea);
 	}
 
 	public String getMatrizeaBalioa(int lerro, int zut) {
@@ -55,10 +59,45 @@ public class Sudoku extends Observable {
 		return unekoa;
 	}
 
+	public void setMaila(int m){
+		this.maila = m;
+	}
+
+	public void laguntzaKopHanditu(){
+		laguntzaKop++;
+	}
+
 
 	public boolean setJokalariarenBalioa(int zut, int errenkada,String zbkString){
 		int zbk=Integer.parseInt(zbkString);
 		matrizea[zut][errenkada].setBalioa(zbk);
 		return true;
+	}
+
+	public boolean emaitzaEgiaztatu(){
+		boolean emaitza = true;
+		int i = 0;
+		while(i<matrizea.length && emaitza){
+			int j = 0;
+			while(j<matrizea[i].length && emaitza){
+				Gelaxka g = getGelaxka(j,i);
+				if(!g.balioOnaDa(g.getBalioa()) ||g.getBalioa()==0){
+					emaitza = false;
+				}
+				j++;
+			}
+			i++;
+		}
+		return emaitza;
+	}
+
+
+	public double puntuazioaKalkulatu(){
+		double puntuazioa = 0.0;
+		if(emaitzaEgiaztatu()){
+			double denbora = Timerra.getInstance().igarotakoDenbora();
+			puntuazioa = (3000*maila)/(denbora+(30*laguntzaKop));
+		}
+		return puntuazioa;
 	}
 }

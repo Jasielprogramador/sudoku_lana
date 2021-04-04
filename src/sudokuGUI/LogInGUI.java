@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 import model.Gelaxka;
 import model.Sudoku;
 import model.modelutils.Reader;
+import model.modelutils.Timerra;
 
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -153,8 +154,14 @@ public class LogInGUI extends JFrame implements Observer{
 					textField.setText("");
 				} else {
 					Gelaxka[][] partidakoSudoku = Sudoku.getInstance().getSudokuBat(textField.getText());
-					SudokuGUI sud = new SudokuGUI();
 					Sudoku.getInstance().setMatrizea(partidakoSudoku);
+					Sudoku.getInstance().setMaila(zailtasuna);
+
+					SudokuGUI sud = new SudokuGUI(partidakoSudoku);
+
+					double start = Timerra.getInstance().timerraHasi();
+					Timerra.getInstance().setStart(start);
+
 					sud.setVisible(true);
 					setVisible(false);
 				}

@@ -34,4 +34,13 @@ public class Gelaxka {
 
 	public ArrayList<Integer> getBalioPosibleak(){return balioPosibleak;}
 
+	public boolean balioOnaDa(int balioa){
+		if(balioOna == balioa){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+
 }

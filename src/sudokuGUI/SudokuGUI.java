@@ -60,34 +60,42 @@ public class SudokuGUI extends JFrame implements Observer {
 	/**
 	 * Create the frame.
 	 */
-	public SudokuGUI() {
+	public SudokuGUI(Gelaxka[][] partidakoSudoku) {
 		Sudoku.getInstance().addObserver(this);
+
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(new BorderLayout(0, 0));
+		contentPane.add(getSudokuPanel(partidakoSudoku), BorderLayout.CENTER);
+		contentPane.add(getInformazioPanel(), BorderLayout.EAST);
+
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		setVisible(false);
 	}
 
-	private JPanel getSudokuPanel() {
+	private JPanel getSudokuPanel(Gelaxka[][] partidakoSudoku) {
 		if (sudokuPanel == null) {
 			sudokuPanel = new JPanel();
 			sudokuPanel.setLayout(new GridLayout(3, 3));
-			matrizeaSortu();
+			matrizeaSortu(partidakoSudoku);
 		}
 		return sudokuPanel;
 	}
 
 
-	private void matrizeaSortu() {
+	private void matrizeaSortu(Gelaxka[][] partidakoSudoku) {
 		for(int l=0;l<3;l++) {
 			for(int z=0;z<3;z++) {
-				sudokuPanel.add(getMatrizeKarratuHandiak(l, z));
+				sudokuPanel.add(getMatrizeKarratuHandiak(l, z, partidakoSudoku));
 			}
 		}
 	}
 
 
-	private JPanel getMatrizeKarratuHandiak(int lerro,int zutabe) {
+	private JPanel getMatrizeKarratuHandiak(int lerro,int zutabe,Gelaxka[][] partidakoSudoku) {
 		//JPanel  gridBagLayout
 		JPanel gridBagLayoutPane = new JPanel();
 
@@ -110,7 +118,7 @@ public class SudokuGUI extends JFrame implements Observer {
 
 		for(int l=0;l<3;l++) {
 			for(int z=0;z<3;z++) {
-				matrizetxoKopia.add(getZenbakienMatrizea(l+lerro*3, z+zutabe*3));
+				matrizetxoKopia.add(getZenbakienMatrizea(l+lerro*3, z+zutabe*3,partidakoSudoku));
 			}
 		}
 
@@ -121,7 +129,7 @@ public class SudokuGUI extends JFrame implements Observer {
 		return gridBagLayoutPane;
 	}
 
-	private JPanel getZenbakienMatrizea(int zut,int errenkada) {
+	private JPanel getZenbakienMatrizea(int zut,int errenkada,Gelaxka[][] partidakoSudoku) {
 
 		//JPanel  gridBagLayout
 		JPanel gridBagLayoutPane = new JPanel();
@@ -134,10 +142,12 @@ public class SudokuGUI extends JFrame implements Observer {
 
 		//JTextField
 		JLabel lblBalioa=new JLabel();
-		String zenbakia=Sudoku.getInstance().getMatrizeaBalioa(errenkada, zut);
-		if(!zenbakia.equals("0")){
+		int zenbakia=partidakoSudoku[errenkada][zut].getBalioa();
+		String zbk=String.valueOf(zenbakia);
+
+		if(!zbk.equals("0")){
 			lblBalioa.setForeground(Color.RED);
-			lblBalioa.setText(zenbakia);
+			lblBalioa.setText(zbk);
 		}
 		else lblBalioa.setText("");
 
@@ -157,15 +167,14 @@ public class SudokuGUI extends JFrame implements Observer {
 					gridBagPane=gridBagLayoutPane;
 
 					lblHautatutakoKasilla=lblBalioa;
-					flag=true;
-
 					balioZutabea=zut;
 					balioErrenkada=errenkada;
+
+					flag=true;
 				}
 
 			}
 		});
-
 
 		return gridBagLayoutPane;
 	}
@@ -295,12 +304,6 @@ public class SudokuGUI extends JFrame implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(new BorderLayout(0, 0));
-		contentPane.add(getSudokuPanel(), BorderLayout.CENTER);
-		contentPane.add(getInformazioPanel(), BorderLayout.EAST);
 
 	}
 
@@ -316,19 +319,24 @@ public class SudokuGUI extends JFrame implements Observer {
 
 					int zbk = Integer.parseInt(txtFieldBalioa.getText());
 
-					if (txtFieldBalioa.getText() != "") {
-						if (zbk >= 1 && zbk <= 9) {
-							lblHautatutakoKasilla.setText(txtFieldBalioa.getText());
-							Sudoku.getInstance().setJokalariarenBalioa(balioZutabea, balioErrenkada, txtFieldBalioa.getText());
-						} else JOptionPane.showMessageDialog(null, "Bakarrik 1 eta 9 arteko zenbakiak jarri ditzazkezu");
-					}
+					if (zbk >= 1 && zbk <= 9) {
+						lblHautatutakoKasilla.setText(txtFieldBalioa.getText());
+						Sudoku.getInstance().setJokalariarenBalioa(balioErrenkada, balioZutabea, txtFieldBalioa.getText());
+
+						//konprobatu bukatu duen
+						boolean bool=Sudoku.getInstance().emaitzaEgiaztatu();
+						if(bool){
+							System.out.println("-------------");
+							System.out.println(Sudoku.getInstance().puntuazioaKalkulatu());
+						}
+
+					} else JOptionPane.showMessageDialog(null, "Bakarrik 1 eta 9 arteko zenbakiak jarri ditzazkezu");
 
 				} catch (NumberFormatException e) {
 					JOptionPane.showMessageDialog(null, "Zenbaki bat sartu mesedez");
 					txtFieldBalioa.setText("");
 				}
 			}
-
 
 		}
 	}
