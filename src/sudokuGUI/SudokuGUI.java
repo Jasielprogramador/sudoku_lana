@@ -19,9 +19,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Observable;
+import java.util.Observer;
 
-public class SudokuGUI extends JFrame {
+public class SudokuGUI extends JFrame implements Observer {
 
 	//Panel generikoak
 	private JPanel contentPane;
@@ -42,7 +43,6 @@ public class SudokuGUI extends JFrame {
 	private int balioZutabea;
 	private int balioErrenkada;
 	private boolean flag=false;
-	private boolean sakatua = false;
 
 
 	private JLabel lblHautagai;
@@ -61,14 +61,10 @@ public class SudokuGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public SudokuGUI() {
+		Sudoku.getInstance().addObserver(this);
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(new BorderLayout(0, 0));
-		contentPane.add(getSudokuPanel(), BorderLayout.CENTER);
-		contentPane.add(getInformazioPanel(), BorderLayout.EAST);
 		setVisible(false);
 	}
 
@@ -145,6 +141,7 @@ public class SudokuGUI extends JFrame {
 		}
 		else lblBalioa.setText("");
 
+
 		gridBagLayoutPane.add(lblBalioa);
 
 
@@ -153,9 +150,7 @@ public class SudokuGUI extends JFrame {
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-
 				if(lblBalioa.getForeground()!=Color.RED){
-					sakatua = true;
 					gridBagPane.setBorder(new LineBorder(Color.BLACK));
 
 					gridBagLayoutPane.setBorder(new LineBorder(Color.BLUE,3));
@@ -166,26 +161,12 @@ public class SudokuGUI extends JFrame {
 
 					balioZutabea=zut;
 					balioErrenkada=errenkada;
-
-
-
-					ArrayList<Integer> hautagaiak = Sudoku.getInstance().getGelaxka(balioErrenkada, balioZutabea).getBalioPosibleak();
-
-					String s = "";
-
-					for (int i = 0;i<hautagaiak.size();i++){
-						s = s + " " + hautagaiak.get(i).toString();
-
-					}
-
-					txtFieldHautagai.setText(s);
-
-					for (int i = 0;i<hautagaiak.size();i++){
-						hautagaiak.remove(i);
-					}
 				}
+
 			}
 		});
+
+
 		return gridBagLayoutPane;
 	}
 
@@ -285,7 +266,6 @@ public class SudokuGUI extends JFrame {
 	private JButton getBtnLaguntza() {
 		if (btnLaguntza == null) {
 			btnLaguntza = new JButton("Laguntza");
-			btnLaguntza.addActionListener(getController());
 		}
 		return btnLaguntza;
 	}
@@ -313,54 +293,43 @@ public class SudokuGUI extends JFrame {
 		return controller;
 	}
 
+	@Override
+	public void update(Observable o, Object arg) {
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(new BorderLayout(0, 0));
+		contentPane.add(getSudokuPanel(), BorderLayout.CENTER);
+		contentPane.add(getInformazioPanel(), BorderLayout.EAST);
+
+	}
+
 
 	private class Controller implements ActionListener{
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
+			if (!flag) {
+				JOptionPane.showMessageDialog(null, "Mesedez gelaxka bat sakatu");
+			} else {
+				try {
 
-			JButton btn = (JButton) arg0.getSource();
+					int zbk = Integer.parseInt(txtFieldBalioa.getText());
 
-			if (btn.equals(btnAldatu)) {
-				if (!sakatua) {
-					JOptionPane.showMessageDialog(null, "Mesedez gelaxka bat sakatu ezazu");
-				} else {
-					try {
-						ArrayList<Integer> h = new ArrayList<Integer>();
-						String[] s = txtFieldHautagai.getText().split(" ");
-
-						for (int i = 0; i < s.length; i++) {
-							if (!s[i].equals("")) {
-								h.add(Integer.parseInt(s[i]));
-							}
-						}
-
-						int zbk = Integer.parseInt(txtFieldBalioa.getText());
-
-						if (txtFieldBalioa.getText() != "") {
-							if (zbk >= 1 && zbk <= 9) {
-								lblHautatutakoKasilla.setText(txtFieldBalioa.getText());
-								Sudoku.getInstance().setJokalariarenBalioa(balioZutabea, balioErrenkada, txtFieldBalioa.getText());
-							} else
-								JOptionPane.showMessageDialog(null, "Bakarrik 1 eta 9 arteko zenbakiak jarri ditzakezu");
-						}
-
-						if (txtFieldHautagai.getText() != "") {
-							Sudoku.getInstance().getGelaxka(balioErrenkada, balioZutabea).setBalioPosibleak(h);
-						}
-
-					} catch (NumberFormatException e) {
-						JOptionPane.showMessageDialog(null, "Zenbaki bat sartu mesedez");
-						txtFieldBalioa.setText("");
+					if (txtFieldBalioa.getText() != "") {
+						if (zbk >= 1 && zbk <= 9) {
+							lblHautatutakoKasilla.setText(txtFieldBalioa.getText());
+							Sudoku.getInstance().setJokalariarenBalioa(balioZutabea, balioErrenkada, txtFieldBalioa.getText());
+						} else JOptionPane.showMessageDialog(null, "Bakarrik 1 eta 9 arteko zenbakiak jarri ditzazkezu");
 					}
+
+				} catch (NumberFormatException e) {
+					JOptionPane.showMessageDialog(null, "Zenbaki bat sartu mesedez");
+					txtFieldBalioa.setText("");
 				}
 			}
 
-			else if(btn.equals(btnLaguntza)){
-				Sudoku.getInstance().laguntzaKopHanditu();
-				//TODO
 
-			}
 		}
 	}
 }
