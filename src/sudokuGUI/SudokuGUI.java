@@ -314,6 +314,7 @@ public class SudokuGUI extends JFrame implements Observer {
 
 	}
 
+	//TODO: bukaerarako erabiltzaileak sartutako erroreak zuzenean zuzendu daitezke(kolore batez markatu,...)
 
 	private class Controller implements ActionListener{
 
