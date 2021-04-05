@@ -1,10 +1,6 @@
 package sudokuGUI;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.EventQueue;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import java.awt.*;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -13,12 +9,10 @@ import javax.swing.border.LineBorder;
 import model.Gelaxka;
 import model.Sudoku;
 
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -39,7 +33,8 @@ public class SudokuGUI extends JFrame implements Observer {
 	private JPanel sudokuPanel;
 	private JPanel gridBagPane=new JPanel(new GridBagLayout());
 
-	private JLabel lblHautatutakoKasilla=new JLabel();
+	private JLabel lblHautatutakoBalioa =new JLabel();
+	private JLabel lblHautatutakoHautagaiak=new JLabel();
 	private int balioZutabea;
 	private int balioErrenkada;
 	private boolean flag=false;
@@ -139,9 +134,19 @@ public class SudokuGUI extends JFrame implements Observer {
 		gridBagLayoutPane.setBorder(new LineBorder(Color.BLACK));
 
 
+		//JLabel hautagaiak
+		JLabel lblHautagaiak=new JLabel();
+		lblHautagaiak.setHorizontalAlignment(SwingConstants.CENTER);
+		lblHautagaiak.setVerticalAlignment(SwingConstants.CENTER);
+		lblHautagaiak.setFont(new Font("Verdana",1,9));
 
-		//JTextField
+
+		//JLabel balioa
 		JLabel lblBalioa=new JLabel();
+		lblBalioa.setHorizontalAlignment(SwingConstants.CENTER);
+		lblBalioa.setVerticalAlignment(SwingConstants.CENTER);
+		lblBalioa.setFont(new Font("Verdana",1,15));
+
 		int zenbakia=partidakoSudoku[errenkada][zut].getBalioa();
 		String zbk=String.valueOf(zenbakia);
 
@@ -152,8 +157,8 @@ public class SudokuGUI extends JFrame implements Observer {
 		else lblBalioa.setText("");
 
 
+		gridBagLayoutPane.add(lblHautagaiak);
 		gridBagLayoutPane.add(lblBalioa);
-
 
 
 		gridBagLayoutPane.addMouseListener(new MouseAdapter() {
@@ -166,7 +171,9 @@ public class SudokuGUI extends JFrame implements Observer {
 					gridBagLayoutPane.setBorder(new LineBorder(Color.BLUE,3));
 					gridBagPane=gridBagLayoutPane;
 
-					lblHautatutakoKasilla=lblBalioa;
+					lblHautatutakoBalioa =lblBalioa;
+					lblHautatutakoHautagaiak=lblHautagaiak;
+
 					balioZutabea=zut;
 					balioErrenkada=errenkada;
 
@@ -320,7 +327,9 @@ public class SudokuGUI extends JFrame implements Observer {
 					int zbk = Integer.parseInt(txtFieldBalioa.getText());
 
 					if (zbk >= 1 && zbk <= 9) {
-						lblHautatutakoKasilla.setText(txtFieldBalioa.getText());
+						lblHautatutakoBalioa.setText(txtFieldBalioa.getText());
+						lblHautatutakoHautagaiak.setText(txtFieldHautagai.getText());
+
 						Sudoku.getInstance().setJokalariarenBalioa(balioErrenkada, balioZutabea, txtFieldBalioa.getText());
 
 						//konprobatu bukatu duen
@@ -334,8 +343,10 @@ public class SudokuGUI extends JFrame implements Observer {
 
 				} catch (NumberFormatException e) {
 					JOptionPane.showMessageDialog(null, "Zenbaki bat sartu mesedez");
-					txtFieldBalioa.setText("");
 				}
+
+				txtFieldBalioa.setText("");
+				txtFieldHautagai.setText("");
 			}
 
 		}
