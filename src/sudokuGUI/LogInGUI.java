@@ -110,7 +110,7 @@ public class LogInGUI extends JFrame implements Observer{
 		if (panel == null) {
 			panel = new JPanel();
 			panel.setLayout(new GridLayout(0, 3, 0, 0));
-			//panel.add(getPaneHutsa());
+			panel.add(getPaneHutsa());
 			panel.add(getBtnNewButton());
 		}
 		return panel;
