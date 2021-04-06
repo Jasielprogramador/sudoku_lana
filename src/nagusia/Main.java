@@ -14,7 +14,6 @@ public class Main {
 		//EREDUA
 		Sudoku.getInstance(); //sudokua kargatzeko
 		Reader.getInstance().irakurri(); //sudoku guztiak kargatu testutik :S
-		Timerra.getInstance().timerraHasi();
 	}
 
 }
