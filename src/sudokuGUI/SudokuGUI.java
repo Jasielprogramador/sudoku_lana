@@ -339,6 +339,9 @@ public class SudokuGUI extends JFrame implements Observer {
 							System.out.println("-------------");
 							System.out.println(Sudoku.getInstance().puntuazioaKalkulatu());
 						}
+						else{
+							Sudoku.getInstance().puntuazioaKalkulatu();
+						}
 
 					} else JOptionPane.showMessageDialog(null, "Bakarrik 1 eta 9 arteko zenbakiak jarri ditzazkezu");
 

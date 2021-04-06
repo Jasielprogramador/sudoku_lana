@@ -17,12 +17,12 @@ public class Timerra {
     }
 
     public double timerraHasi(){
-        double start = System.nanoTime();
+        double start = System.currentTimeMillis();
         return start;
     }
 
     public double igarotakoDenbora(){
-        double finish = System.nanoTime();
+        double finish = System.currentTimeMillis();
         return finish-start;
     }
 
