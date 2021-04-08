@@ -17,7 +17,7 @@ public class Timerra {
     }
 
     public double timerraHasi(){
-        double start = System.currentTimeMillis();
+        start = System.currentTimeMillis();
         return start;
     }
 

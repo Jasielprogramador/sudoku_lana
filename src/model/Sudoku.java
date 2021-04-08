@@ -2,10 +2,7 @@ package model;
 
 import model.modelutils.Timerra;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Observable;
+import java.util.*;
 
 public class Sudoku extends Observable {
 
@@ -68,9 +65,9 @@ public class Sudoku extends Observable {
 	}
 
 
-	public boolean setJokalariarenBalioa(int zut, int errenkada,String zbkString){
+	public boolean setJokalariarenBalioa(int errenkada, int zut,String zbkString){
 		int zbk=Integer.parseInt(zbkString);
-		matrizea[zut][errenkada].setBalioa(zbk);
+		matrizea[errenkada][zut].setBalioa(zbk);
 		return true;
 	}
 
@@ -96,10 +93,50 @@ public class Sudoku extends Observable {
 		double puntuazioa = 0.0;
 
 		if(emaitzaEgiaztatu()){
-			double denbora = (Timerra.getInstance().igarotakoDenbora())/10000;
+			double denbora = (Timerra.getInstance().igarotakoDenbora())/10000; //segundutan
 			System.out.println(String.format("%.2f", denbora));
 			puntuazioa = (3000*maila)/(denbora+(30*laguntzaKop));
 		}
 		return puntuazioa;
+	}
+
+	public boolean ondoDago(int errenkada, int zut, int balioa){
+		//zutabea begiratu
+		for(int i=0;i<9;i++){
+			if(i!=zut && matrizea[errenkada][i].getBalioa()==balioa){
+				setChanged();
+				notifyObservers(Arrays.asList(errenkada+1,i+1));
+			}
+		}
+
+		//errenkada begiratu
+		for(int j=0;j<9;j++){
+			if(j!=errenkada && matrizea[j][zut].getBalioa()==balioa){
+				setChanged();
+				notifyObservers(Arrays.asList(j+1,zut+1));  //Arrays.asList(zut,j)
+			}
+		}
+
+		//karratua begiratu
+		int errenkadaKarratua=errenkada-(errenkada % 3);
+		int zutKarratua=zut-(zut % 3);
+
+		for (int a=errenkadaKarratua;a<errenkadaKarratua+3;a++){
+			for (int b=zutKarratua;b<zutKarratua+3;b++){
+				if(matrizea[a][b].getBalioa()==balioa){
+					if(a!=errenkada || b!=zut){  //a==errenkada && b==zut  --logika negatua--> a!=errenkada || b!=zut
+						setChanged();
+						notifyObservers(Arrays.asList(-1));
+					}
+
+				}
+			}
+		}
+
+
+
+
+
+		return true;
 	}
 }

@@ -158,8 +158,7 @@ public class LogInGUI extends JFrame implements Observer{
 
 					SudokuGUI sud = new SudokuGUI(partidakoSudoku);
 
-					double start = Timerra.getInstance().timerraHasi();
-					Timerra.getInstance().setStart(start);
+					Timerra.getInstance().timerraHasi();
 
 					sud.setVisible(true);
 					setVisible(false);

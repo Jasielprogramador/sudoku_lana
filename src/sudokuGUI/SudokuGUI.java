@@ -13,6 +13,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -151,7 +154,7 @@ public class SudokuGUI extends JFrame implements Observer {
 		String zbk=String.valueOf(zenbakia);
 
 		if(!zbk.equals("0")){
-			lblBalioa.setForeground(Color.RED);
+			lblBalioa.setForeground(Color.GREEN);
 			lblBalioa.setText(zbk);
 		}
 		else lblBalioa.setText("");
@@ -165,7 +168,7 @@ public class SudokuGUI extends JFrame implements Observer {
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				if(lblBalioa.getForeground()!=Color.RED){
+				if(lblBalioa.getForeground()!=Color.GREEN){
 					gridBagPane.setBorder(new LineBorder(Color.BLACK));
 
 					gridBagLayoutPane.setBorder(new LineBorder(Color.BLUE,3));
@@ -311,10 +314,18 @@ public class SudokuGUI extends JFrame implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
+		//TODO: bukaerarako erabiltzaileak sartutako erroreak zuzenean zuzendu daitezke(kolore batez markatu,...)
 
+		List lista=(List) arg;
+
+		if(lista.size()==1){
+			textArea.append("\nKarratuko zenbakia errepikatzen da");
+		}
+		else{
+			textArea.append("\nZenbakiak talkak ditu ("+lista.get(0)+","+lista.get(1)+") koordenatuetako balioekin");
+		}
 	}
 
-	//TODO: bukaerarako erabiltzaileak sartutako erroreak zuzenean zuzendu daitezke(kolore batez markatu,...)
 
 	private class Controller implements ActionListener{
 
@@ -324,7 +335,6 @@ public class SudokuGUI extends JFrame implements Observer {
 				JOptionPane.showMessageDialog(null, "Mesedez gelaxka bat sakatu");
 			} else {
 				try {
-
 					int zbk = Integer.parseInt(txtFieldBalioa.getText());
 
 					if (zbk >= 1 && zbk <= 9) {
@@ -339,9 +349,8 @@ public class SudokuGUI extends JFrame implements Observer {
 							System.out.println("-------------");
 							System.out.println(Sudoku.getInstance().puntuazioaKalkulatu());
 						}
-						else{
-							Sudoku.getInstance().puntuazioaKalkulatu();
-						}
+
+						Sudoku.getInstance().ondoDago(balioErrenkada,balioZutabea,zbk);
 
 					} else JOptionPane.showMessageDialog(null, "Bakarrik 1 eta 9 arteko zenbakiak jarri ditzazkezu");
 
