@@ -101,11 +101,14 @@ public class Sudoku extends Observable {
 	}
 
 	public boolean ondoDago(int errenkada, int zut, int balioa){
+
+		boolean bool=true;
 		//zutabea begiratu
 		for(int i=0;i<9;i++){
 			if(i!=zut && matrizea[errenkada][i].getBalioa()==balioa){
 				setChanged();
 				notifyObservers(Arrays.asList(errenkada+1,i+1));
+				bool=false;
 			}
 		}
 
@@ -114,6 +117,7 @@ public class Sudoku extends Observable {
 			if(j!=errenkada && matrizea[j][zut].getBalioa()==balioa){
 				setChanged();
 				notifyObservers(Arrays.asList(j+1,zut+1));  //Arrays.asList(zut,j)
+				bool=false;
 			}
 		}
 
@@ -127,6 +131,7 @@ public class Sudoku extends Observable {
 					if(a!=errenkada || b!=zut){  //a==errenkada && b==zut  --logika negatua--> a!=errenkada || b!=zut
 						setChanged();
 						notifyObservers(Arrays.asList(-1));
+						bool=false;
 					}
 
 				}
@@ -137,6 +142,6 @@ public class Sudoku extends Observable {
 
 
 
-		return true;
+		return bool;
 	}
 }
