@@ -1,5 +1,6 @@
 package model;
 
+import model.modelutils.Enumeratzailea;
 import model.modelutils.Timerra;
 
 import java.util.*;
@@ -8,7 +9,7 @@ public class Sudoku extends Observable {
 
 	private Gelaxka[][] matrizea=new Gelaxka[9][9];
 
-	private HashMap<Integer, ArrayList<Gelaxka[][]>> matrizeak= new HashMap<Integer, ArrayList<Gelaxka[][]>>();
+	private final HashMap<Integer, ArrayList<Gelaxka[][]>> matrizeak= new HashMap<>();
 
 	private int maila=0;
 
@@ -23,9 +24,9 @@ public class Sudoku extends Observable {
 	}
 
 	private void setZailtasunak() {
-		matrizeak.put(1,new ArrayList<Gelaxka[][]>());
-		matrizeak.put(2,new ArrayList<Gelaxka[][]>());
-		matrizeak.put(3,new ArrayList<Gelaxka[][]>());
+		matrizeak.put(1, new ArrayList<>());
+		matrizeak.put(2, new ArrayList<>());
+		matrizeak.put(3, new ArrayList<>());
 
 	}
 
@@ -85,6 +86,10 @@ public class Sudoku extends Observable {
 			}
 			i++;
 		}
+		if (emaitza){
+			setChanged();
+			notifyObservers(Arrays.asList(Enumeratzailea.BUKATUTA));
+		}
 		return emaitza;
 	}
 
@@ -100,6 +105,7 @@ public class Sudoku extends Observable {
 		return puntuazioa;
 	}
 
+
 	public boolean ondoDago(int errenkada, int zut, int balioa){
 
 		boolean bool=true;
@@ -107,7 +113,7 @@ public class Sudoku extends Observable {
 		for(int i=0;i<9;i++){
 			if(i!=zut && matrizea[errenkada][i].getBalioa()==balioa){
 				setChanged();
-				notifyObservers(Arrays.asList(errenkada+1,i+1));
+				notifyObservers(Arrays.asList(Enumeratzailea.BALIO_TXARRA,errenkada+1,i+1));
 				bool=false;
 			}
 		}
@@ -116,7 +122,7 @@ public class Sudoku extends Observable {
 		for(int j=0;j<9;j++){
 			if(j!=errenkada && matrizea[j][zut].getBalioa()==balioa){
 				setChanged();
-				notifyObservers(Arrays.asList(j+1,zut+1));  //Arrays.asList(zut,j)
+				notifyObservers(Arrays.asList(Enumeratzailea.BALIO_TXARRA,j+1,zut+1));  //Arrays.asList(zut,j)
 				bool=false;
 			}
 		}
@@ -130,17 +136,13 @@ public class Sudoku extends Observable {
 				if(matrizea[a][b].getBalioa()==balioa){
 					if(a!=errenkada || b!=zut){  //a==errenkada && b==zut  --logika negatua--> a!=errenkada || b!=zut
 						setChanged();
-						notifyObservers(Arrays.asList(-1));
+						notifyObservers(Arrays.asList(Enumeratzailea.BALIO_TXARRA,-1));
 						bool=false;
 					}
 
 				}
 			}
 		}
-
-
-
-
 
 		return bool;
 	}

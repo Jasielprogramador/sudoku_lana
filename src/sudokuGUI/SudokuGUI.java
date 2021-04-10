@@ -8,6 +8,7 @@ import javax.swing.border.LineBorder;
 
 import model.Gelaxka;
 import model.Sudoku;
+import model.modelutils.Enumeratzailea;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,6 +19,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+
+import static model.modelutils.Enumeratzailea.BALIO_TXARRA;
+import static model.modelutils.Enumeratzailea.BUKATUTA;
 
 public class SudokuGUI extends JFrame implements Observer {
 
@@ -154,7 +158,7 @@ public class SudokuGUI extends JFrame implements Observer {
 		String zbk=String.valueOf(zenbakia);
 
 		if(!zbk.equals("0")){
-			lblBalioa.setForeground(Color.GREEN);
+			lblBalioa.setForeground(Color.RED);
 			lblBalioa.setText(zbk);
 		}
 		else lblBalioa.setText("");
@@ -168,7 +172,7 @@ public class SudokuGUI extends JFrame implements Observer {
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				if(lblBalioa.getForeground()!=Color.GREEN){
+				if(lblBalioa.getForeground()!=Color.RED){
 					gridBagPane.setBorder(new LineBorder(Color.BLACK));
 
 					gridBagLayoutPane.setBorder(new LineBorder(Color.BLUE,3));
@@ -314,16 +318,31 @@ public class SudokuGUI extends JFrame implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		//TODO: bukaerarako erabiltzaileak sartutako erroreak zuzenean zuzendu daitezke(kolore batez markatu,...)
+		//HONI DEITZEN ZAION BAKOITZEAN ENUM KLASEKO BALIOA JARRIKO ZAIO LISTAKO LEHEN POSIZIOAN
 
 		List lista=(List) arg;
 
-		if(lista.size()==1){
-			textArea.append("\nKarratuko zenbakia errepikatzen da");
+		Enumeratzailea enumeratzailea= (Enumeratzailea) lista.get(0);
+
+		switch (enumeratzailea){
+			case BALIO_TXARRA:
+				if(lista.size()==2){
+					textArea.append("\nKarratuko zenbakia errepikatzen da");
+				}
+				else{
+					textArea.append("\nZenbakiak talkak ditu ("+lista.get(1)+","+lista.get(2)+") koordenatuetako balioekin");
+				}
+				break;
+			case BUKATUTA:
+				System.out.println("-------------");
+				System.out.println(Sudoku.getInstance().puntuazioaKalkulatu());
+				break;
 		}
-		else{
-			textArea.append("\nZenbakiak talkak ditu ("+lista.get(0)+","+lista.get(1)+") koordenatuetako balioekin");
-		}
+
+
+		//TODO: bukaerarako erabiltzaileak sartutako erroreak zuzenean zuzendu daitezke(kolore batez markatu,...)
+
+
 	}
 
 
@@ -346,10 +365,11 @@ public class SudokuGUI extends JFrame implements Observer {
 						//konprobatu bukatu duen
 						boolean bool=Sudoku.getInstance().emaitzaEgiaztatu();
 						if(bool){
-							System.out.println("-------------");
-							System.out.println(Sudoku.getInstance().puntuazioaKalkulatu());
+							System.out.println("kaixo");
 						}
 
+
+						//konprobatu sartutako balioa ondo dagoen
 						Sudoku.getInstance().ondoDago(balioErrenkada,balioZutabea,zbk);
 
 					} else JOptionPane.showMessageDialog(null, "Bakarrik 1 eta 9 arteko zenbakiak jarri ditzazkezu");
