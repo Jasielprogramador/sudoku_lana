@@ -336,6 +336,7 @@ public class SudokuGUI extends JFrame implements Observer {
 			case BUKATUTA:
 				System.out.println("-------------");
 				System.out.println(Sudoku.getInstance().puntuazioaKalkulatu());
+				System.exit(0);
 				break;
 		}
 
@@ -357,6 +358,7 @@ public class SudokuGUI extends JFrame implements Observer {
 					int zbk = Integer.parseInt(txtFieldBalioa.getText());
 
 					if (zbk >= 1 && zbk <= 9) {
+						textArea.setText("");
 						lblHautatutakoBalioa.setText(txtFieldBalioa.getText());
 						lblHautatutakoHautagaiak.setText(txtFieldHautagai.getText());
 
