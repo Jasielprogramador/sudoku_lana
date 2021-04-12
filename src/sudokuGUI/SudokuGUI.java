@@ -335,7 +335,7 @@ public class SudokuGUI extends JFrame implements Observer {
 				break;
 			case BUKATUTA:
 				System.out.println("-------------");
-				System.out.println(Sudoku.getInstance().puntuazioaKalkulatu());
+				System.out.println("Zorionak zure puntuazioa honako hau da: "+Sudoku.getInstance().puntuazioaKalkulatu());
 				System.exit(0);
 				break;
 		}
