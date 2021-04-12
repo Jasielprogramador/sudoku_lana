@@ -96,7 +96,8 @@ public class Sudoku extends Observable {
 
 	public String puntuazioaKalkulatu(){
 		double puntuazioa = 0.0;
-		double denbora = (Timerra.getInstance().igarotakoDenbora())/10000; //segundutan
+		double denbora = (Timerra.getInstance().igarotakoDenbora())/1000; //segundutan
+		System.out.println(denbora);
 		puntuazioa = (3000*maila)/(denbora+(30*laguntzaKop));
 
 		return String.format("%.2f", puntuazioa);
