@@ -145,7 +145,7 @@ public class SudokuGUI extends JFrame implements Observer {
 		JLabel lblHautagaiak=new JLabel();
 		lblHautagaiak.setHorizontalAlignment(SwingConstants.CENTER);
 		lblHautagaiak.setVerticalAlignment(SwingConstants.CENTER);
-		lblHautagaiak.setFont(new Font("Verdana",1,9));
+		lblHautagaiak.setFont(new Font("Verdana",1,30));
 
 
 		//JLabel balioa
@@ -366,9 +366,9 @@ public class SudokuGUI extends JFrame implements Observer {
 
 						//konprobatu bukatu duen
 						boolean bool=Sudoku.getInstance().emaitzaEgiaztatu();
-						if(bool){
-							System.out.println("kaixo");
-						}
+//						if(bool){
+//							System.out.println("kaixo");
+//						}
 
 
 						//konprobatu sartutako balioa ondo dagoen
