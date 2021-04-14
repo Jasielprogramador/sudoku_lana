@@ -1,5 +1,6 @@
-package model;
+package model.sudoku;
 
+import model.gelaxka.Gelaxka;
 import model.modelutils.Enumeratzailea;
 import model.modelutils.Timerra;
 
@@ -10,13 +11,29 @@ public class JokoMatrizea extends Observable {
 
     private int laguntzaKop=0;
 
+    private Sudoku sudoku;
+
+    private int[][] jokokoSudoku=new int[9][9];
+
     private static JokoMatrizea instantzia = new JokoMatrizea();
 
     private JokoMatrizea(){
 
     }
 
-    public static JokoMatrizea getInstantzia(){return instantzia;}
+    public static JokoMatrizea getInstance(){return instantzia;}
+
+    public void setSudoku(Sudoku sudokum){
+        sudoku=sudokum;
+        jokokoSudoku=sudokum.getSudokuHutsa();
+    }
+
+    public boolean setJokalariarenBalioa(int errenkada, int zut,String zbkString){
+        int zbk=Integer.parseInt(zbkString);
+        jokokoSudoku[zut][errenkada]=zbk;
+        return true;
+    }
+
 
 
     public void laguntzaKopHanditu(){
@@ -26,12 +43,13 @@ public class JokoMatrizea extends Observable {
     public boolean emaitzaEgiaztatu(){
         boolean emaitza = true;
         int i = 0;
-        while(i< Sudoku.getInstance().getMatrizea().length && emaitza){
+        while(i< 9 && emaitza){
             int j = 0;
-            while(j< Sudoku.getInstance().getMatrizea()[i].length && emaitza){
-                Gelaxka g = Sudoku.getInstance().getGelaxka(j,i);
-                if(!g.balioOnaDa(g.getBalioa()) ||g.getBalioa()==0){
-                    emaitza = false;
+            while(j< 9 && emaitza){
+                int g = jokokoSudoku[j][i];
+                if(g!=sudoku.getEmaitzaBalioa(j,i) || g==0){
+                    System.out.println("j="+j+"     i="+i);
+                    emaitza=false;
                 }
                 j++;
             }
@@ -48,7 +66,7 @@ public class JokoMatrizea extends Observable {
     public String puntuazioaKalkulatu(){
         double puntuazioa = 0.0;
         double denbora = (Timerra.getInstance().igarotakoDenbora())/1000; //segundutan
-        puntuazioa = (3000* Sudoku.getInstance().getMaila())/(denbora+(30*laguntzaKop));
+        puntuazioa = (3000* sudoku.getMaila())/(denbora+(30*laguntzaKop));
 
         return String.format("%.2f", puntuazioa);
     }
@@ -56,10 +74,11 @@ public class JokoMatrizea extends Observable {
 
     public boolean ondoDago(int errenkada, int zut, int balioa){
 
+        //TODO: metodoa kendu daiteke ....
         boolean bool=true;
         //zutabea begiratu
         for(int i=0;i<9;i++){
-            if(i!=zut && Sudoku.getInstance().getMatrizea()[errenkada][i].getBalioa()==balioa){
+            if(i!=zut && jokokoSudoku[i][errenkada]==balioa){
                 setChanged();
                 notifyObservers(Arrays.asList(Enumeratzailea.BALIO_TXARRA,errenkada+1,i+1));
                 bool=false;
@@ -68,7 +87,7 @@ public class JokoMatrizea extends Observable {
 
         //errenkada begiratu
         for(int j=0;j<9;j++){
-            if(j!=errenkada && Sudoku.getInstance().getMatrizea()[j][zut].getBalioa()==balioa){
+            if(j!=errenkada && jokokoSudoku[zut][j]==balioa){
                 setChanged();
                 notifyObservers(Arrays.asList(Enumeratzailea.BALIO_TXARRA,j+1,zut+1));  //Arrays.asList(zut,j)
                 bool=false;
@@ -81,7 +100,7 @@ public class JokoMatrizea extends Observable {
 
         for (int a=errenkadaKarratua;a<errenkadaKarratua+3;a++){
             for (int b=zutKarratua;b<zutKarratua+3;b++){
-                if(Sudoku.getInstance().getMatrizea()[a][b].getBalioa()==balioa){
+                if(jokokoSudoku[b][a]==balioa){
                     if(a!=errenkada || b!=zut){  //a==errenkada && b==zut  --logika negatua--> a!=errenkada || b!=zut
                         setChanged();
                         notifyObservers(Arrays.asList(Enumeratzailea.BALIO_TXARRA,-1));

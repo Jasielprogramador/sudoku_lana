@@ -4,10 +4,12 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import model.Gelaxka;
+import model.gelaxka.Gelaxka;
 import model.Session;
-import model.Sudoku;
+import model.sudoku.JokoMatrizea;
+import model.sudoku.Sudoku;
 import model.modelutils.Timerra;
+import model.sudoku.SudokuLib;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -146,9 +148,8 @@ public class LogInGUI extends JFrame implements Observer{
 				if (zailtasuna > 3 || zailtasuna < 1) {
 					JOptionPane.showMessageDialog(null, "Mesedez 1 eta 3 artean dagoen zbk bat sartu");
 				} else {
-					Gelaxka[][] partidakoSudoku = Sudoku.getInstance().getSudokuBat(textField.getText());
-					Sudoku.getInstance().setMatrizea(partidakoSudoku);
-					Sudoku.getInstance().setMaila(zailtasuna);
+					Sudoku partidakoSudoku = SudokuLib.getInstance().getSudokuBat(textField.getText());
+					JokoMatrizea.getInstance().setSudoku(partidakoSudoku);
 
 					SudokuGUI sud = new SudokuGUI(partidakoSudoku);
 

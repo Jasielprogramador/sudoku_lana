@@ -1,7 +1,9 @@
-package model;
+package model.gelaxka;
 
 
-public class GelaxkaEditable extends Gelaxka{
+import model.gelaxka.Gelaxka;
+
+public class GelaxkaEditable extends Gelaxka {
 
     public GelaxkaEditable(int pBalio){
         super(pBalio);

@@ -1,4 +1,4 @@
-package model;
+package model.gelaxka;
 
 
 import java.util.ArrayList;

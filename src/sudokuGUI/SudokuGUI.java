@@ -6,9 +6,9 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-import model.Gelaxka;
-import model.Sudoku;
-import model.JokoMatrizea;
+import model.gelaxka.Gelaxka;
+import model.sudoku.Sudoku;
+import model.sudoku.JokoMatrizea;
 import model.modelutils.Enumeratzailea;
 
 import java.awt.event.ActionEvent;
@@ -58,8 +58,8 @@ public class SudokuGUI extends JFrame implements Observer {
 	/**
 	 * Create the frame.
 	 */
-	public SudokuGUI(Gelaxka[][] partidakoSudoku) {
-		JokoMatrizea.getInstantzia().addObserver(this);
+	public SudokuGUI(Sudoku partidakoSudoku) {
+		JokoMatrizea.getInstance().addObserver(this);
 
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -74,7 +74,7 @@ public class SudokuGUI extends JFrame implements Observer {
 		setVisible(false);
 	}
 
-	private JPanel getSudokuPanel(Gelaxka[][] partidakoSudoku) {
+	private JPanel getSudokuPanel(Sudoku partidakoSudoku) {
 		if (sudokuPanel == null) {
 			sudokuPanel = new JPanel();
 			sudokuPanel.setLayout(new GridLayout(3, 3));
@@ -84,7 +84,7 @@ public class SudokuGUI extends JFrame implements Observer {
 	}
 
 
-	private void matrizeaSortu(Gelaxka[][] partidakoSudoku) {
+	private void matrizeaSortu(Sudoku partidakoSudoku) {
 		for(int l=0;l<3;l++) {
 			for(int z=0;z<3;z++) {
 				sudokuPanel.add(getMatrizeKarratuHandiak(l, z, partidakoSudoku));
@@ -93,7 +93,7 @@ public class SudokuGUI extends JFrame implements Observer {
 	}
 
 
-	private JPanel getMatrizeKarratuHandiak(int lerro,int zutabe,Gelaxka[][] partidakoSudoku) {
+	private JPanel getMatrizeKarratuHandiak(int lerro,int zutabe,Sudoku partidakoSudoku) {
 		//JPanel  gridBagLayout
 		JPanel gridBagLayoutPane = new JPanel();
 
@@ -127,7 +127,7 @@ public class SudokuGUI extends JFrame implements Observer {
 		return gridBagLayoutPane;
 	}
 
-	private JPanel getZenbakienMatrizea(int zut,int errenkada,Gelaxka[][] partidakoSudoku) {
+	private JPanel getZenbakienMatrizea(int zut,int errenkada,Sudoku partidakoSudoku) {
 
 		//JPanel  gridBagLayout
 		JPanel gridBagLayoutPane = new JPanel();
@@ -150,7 +150,7 @@ public class SudokuGUI extends JFrame implements Observer {
 		lblBalioa.setVerticalAlignment(SwingConstants.CENTER);
 		lblBalioa.setFont(new Font("Verdana",1,15));
 
-		int zenbakia=partidakoSudoku[errenkada][zut].getBalioa();
+		int zenbakia=partidakoSudoku.getSudokuHutsaBalioa(zut, errenkada);
 		String zbk=String.valueOf(zenbakia);
 
 		if(!zbk.equals("0")){
@@ -314,8 +314,8 @@ public class SudokuGUI extends JFrame implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		//HONI DEITZEN ZAION BAKOITZEAN ENUM KLASEKO BALIOA JARRIKO ZAIO LISTAKO LEHEN POSIZIOAN
 
+		//HONI DEITZEN ZAION BAKOITZEAN ENUM KLASEKO BALIOA JARRIKO ZAIO LISTAKO LEHEN POSIZIOAN
 		List lista=(List) arg;
 
 		Enumeratzailea enumeratzailea= (Enumeratzailea) lista.get(0);
@@ -331,7 +331,7 @@ public class SudokuGUI extends JFrame implements Observer {
 				break;
 			case BUKATUTA:
 				System.out.println("-------------");
-				System.out.println("Zorionak zure puntuazioa honako hau da: "+ JokoMatrizea.getInstantzia().puntuazioaKalkulatu());
+				System.out.println("bokadillo txorizo mesi: "+ JokoMatrizea.getInstance().puntuazioaKalkulatu());
 				System.exit(0);
 				break;
 		}
@@ -358,16 +358,16 @@ public class SudokuGUI extends JFrame implements Observer {
 						lblHautatutakoBalioa.setText(txtFieldBalioa.getText());
 						lblHautatutakoHautagaiak.setText(txtFieldHautagai.getText());
 
-						Sudoku.getInstance().setJokalariarenBalioa(balioErrenkada, balioZutabea, txtFieldBalioa.getText());
+						JokoMatrizea.getInstance().setJokalariarenBalioa(balioErrenkada, balioZutabea, txtFieldBalioa.getText());
 
 						//konprobatu bukatu duen
-						boolean bool= JokoMatrizea.getInstantzia().emaitzaEgiaztatu();
+						boolean bool= JokoMatrizea.getInstance().emaitzaEgiaztatu();
 						if(bool){
 							System.out.println("kaixo");
 						}
 
 						//konprobatu sartutako balioa ondo dagoen
-						JokoMatrizea.getInstantzia().ondoDago(balioErrenkada,balioZutabea,zbk);
+						JokoMatrizea.getInstance().ondoDago(balioErrenkada,balioZutabea,zbk);
 
 					} else JOptionPane.showMessageDialog(null, "Bakarrik 1 eta 9 arteko zenbakiak jarri ditzazkezu");
 

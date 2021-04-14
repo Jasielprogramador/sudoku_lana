@@ -5,9 +5,10 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-import model.Gelaxka;
-import model.GelaxkaFactory;
-import model.Sudoku;
+import model.gelaxka.Gelaxka;
+import model.gelaxka.GelaxkaFactory;
+import model.sudoku.Sudoku;
+import model.sudoku.SudokuLib;
 
 
 public class Reader {
@@ -50,7 +51,8 @@ public class Reader {
 
 		String unekoLerroa="";
 
-		Gelaxka[][] sudokua=new Gelaxka[9][9];
+		Sudoku sudoku=new Sudoku();
+
 
 		while(errenkada!=18) {
 			unekoLerroa=br.readLine();
@@ -65,8 +67,7 @@ public class Reader {
 				for(char i: lista) {
 					int intLag=Character.getNumericValue(i);
 					//hau aldatuta dago
-					Gelaxka gelaxka = GelaxkaFactory.getInstance().sortuGelaxka(intLag);
-					sudokua[zut][errenkada]=gelaxka;
+					sudoku.setSudokuHutsaBalioa(zut,errenkada,intLag);
 					zut++;
 				}
 				errenkada++;
@@ -78,15 +79,16 @@ public class Reader {
 
 				for(char i: lista) {
 					int intLag=Character.getNumericValue(i);
-					sudokua[zut][errenkada-9].setBalioOna(intLag);
+					sudoku.setEmaitzaBalioa(zut,errenkada-9,intLag);
 					zut++;
 				}
 				errenkada++;
 			}
 		}
 
-		Sudoku.getInstance().sartuSudokuaMatrizeaken(Integer.parseInt(s),sudokua);
 
+		sudoku.setMaila(Integer.parseInt(s));
+		SudokuLib.getInstance().sartuSudokuaMatrizeaken(Integer.parseInt(s),sudoku);
 	}
 
 	public static Reader getInstance() {

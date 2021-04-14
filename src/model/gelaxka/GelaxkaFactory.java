@@ -1,6 +1,7 @@
-package model;
+package model.gelaxka;
 
 public class GelaxkaFactory {
+    //TODO: this might be an interface hummmm
 
     private static GelaxkaFactory instance = new GelaxkaFactory();
 
