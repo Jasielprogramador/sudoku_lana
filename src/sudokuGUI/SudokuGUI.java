@@ -343,55 +343,69 @@ public class SudokuGUI extends JFrame implements Observer {
 	}
 
 
-	private class Controller implements ActionListener{
+	private class Controller implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			if (!flag) {
-				JOptionPane.showMessageDialog(null, "Mesedez gelaxka bat sakatu");
-			} else {
-				try {
+			Button btn = (Button) arg0.getSource();
 
-					int zbk;
-					if(txtFieldBalioa.getText().equals("")){
-						zbk = 0;
-					}else{
-						zbk = Integer.parseInt(txtFieldBalioa.getText());
-					}
+			if (btn.equals(btnAldatu)) {
 
-					if(!txtFieldHautagai.getText().equals("") && txtFieldBalioa.getText().equals("")){
-						lblHautatutakoHautagaiak.setText(txtFieldHautagai.getText());
-					}
-					else if (zbk >= 1 && zbk <= 9) {
-						textArea.setText("");
-						lblHautatutakoBalioa.setText(txtFieldBalioa.getText());
-						lblHautatutakoHautagaiak.setText(txtFieldHautagai.getText());
-
-						JokoMatrizea.getInstance().setJokalariarenBalioa(balioErrenkada, balioZutabea, txtFieldBalioa.getText());
-
-						//konprobatu bukatu duen
-						boolean bool= JokoMatrizea.getInstance().emaitzaEgiaztatu();
-						if(bool){
-							System.out.println("kaixo");
+				if (!flag) {
+					JOptionPane.showMessageDialog(null, "Mesedez gelaxka bat sakatu");
+				} else {
+					try {
+						int zbk;
+						if (txtFieldBalioa.getText().equals("")) {
+							zbk = 0;
+						} else {
+							zbk = Integer.parseInt(txtFieldBalioa.getText());
 						}
 
-						//konprobatu sartutako balioa ondo dagoen
-						JokoMatrizea.getInstance().ondoDago(balioErrenkada,balioZutabea,zbk);
+						if (!txtFieldHautagai.getText().equals("") && txtFieldBalioa.getText().equals("")) {
+							lblHautatutakoHautagaiak.setText(txtFieldHautagai.getText());
+						} else if (zbk >= 1 && zbk <= 9) {
+							textArea.setText("");
+							lblHautatutakoBalioa.setText(txtFieldBalioa.getText());
+							lblHautatutakoHautagaiak.setText(txtFieldHautagai.getText());
 
+							JokoMatrizea.getInstance().setJokalariarenBalioa(balioErrenkada, balioZutabea, txtFieldBalioa.getText());
+
+							//konprobatu bukatu duen
+							boolean bool = JokoMatrizea.getInstance().emaitzaEgiaztatu();
+							if (bool) {
+								System.out.println("kaixo");
+							}
+
+							//konprobatu sartutako balioa ondo dagoen
+							JokoMatrizea.getInstance().ondoDago(balioErrenkada, balioZutabea, zbk);
+
+						} else {
+							JOptionPane.showMessageDialog(null, "Bakarrik 1 eta 9 arteko zenbakiak jarri ditzazkezu");
+						}
+
+
+					} catch (NumberFormatException e) {
+						JOptionPane.showMessageDialog(null, "Zenbaki bat sartu mesedez");
 					}
-					else{
-						JOptionPane.showMessageDialog(null, "Bakarrik 1 eta 9 arteko zenbakiak jarri ditzazkezu");
-					}
 
-
-				} catch (NumberFormatException e) {
-					JOptionPane.showMessageDialog(null, "Zenbaki bat sartu mesedez");
+					txtFieldBalioa.setText("");
+					txtFieldHautagai.setText("");
 				}
 
-				txtFieldBalioa.setText("");
-				txtFieldHautagai.setText("");
 			}
+			else if(btn.equals(btnLaguntza)){
 
+				//Sole candidate
+				boolean aurkitua = false;
+				int i = 0;
+				while(i<9 && !aurkitua){
+					int j = 0;
+					while(j<9 && !aurkitua){
+
+					}
+				}
+			}
 		}
 	}
 }
