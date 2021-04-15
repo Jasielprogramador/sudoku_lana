@@ -8,8 +8,4 @@ public class GelaxkaNotEditable extends Gelaxka {
         super(pBalio);
     }
 
-    public int getBalioa() {
-        return super.getBalioa();
-    }
-
 }

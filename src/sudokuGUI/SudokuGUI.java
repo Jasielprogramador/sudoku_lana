@@ -351,9 +351,18 @@ public class SudokuGUI extends JFrame implements Observer {
 				JOptionPane.showMessageDialog(null, "Mesedez gelaxka bat sakatu");
 			} else {
 				try {
-					int zbk = Integer.parseInt(txtFieldBalioa.getText());
 
-					if (zbk >= 1 && zbk <= 9) {
+					int zbk;
+					if(txtFieldBalioa.getText().equals("")){
+						zbk = 0;
+					}else{
+						zbk = Integer.parseInt(txtFieldBalioa.getText());
+					}
+
+					if(!txtFieldHautagai.getText().equals("") && txtFieldBalioa.getText().equals("")){
+						lblHautatutakoHautagaiak.setText(txtFieldHautagai.getText());
+					}
+					else if (zbk >= 1 && zbk <= 9) {
 						textArea.setText("");
 						lblHautatutakoBalioa.setText(txtFieldBalioa.getText());
 						lblHautatutakoHautagaiak.setText(txtFieldHautagai.getText());
@@ -369,7 +378,11 @@ public class SudokuGUI extends JFrame implements Observer {
 						//konprobatu sartutako balioa ondo dagoen
 						JokoMatrizea.getInstance().ondoDago(balioErrenkada,balioZutabea,zbk);
 
-					} else JOptionPane.showMessageDialog(null, "Bakarrik 1 eta 9 arteko zenbakiak jarri ditzazkezu");
+					}
+					else{
+						JOptionPane.showMessageDialog(null, "Bakarrik 1 eta 9 arteko zenbakiak jarri ditzazkezu");
+					}
+
 
 				} catch (NumberFormatException e) {
 					JOptionPane.showMessageDialog(null, "Zenbaki bat sartu mesedez");

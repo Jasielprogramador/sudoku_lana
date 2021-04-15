@@ -10,24 +10,16 @@ public class GelaxkaEditable extends Gelaxka {
     }
 
 
-    public int getBalioa() {
-        return super.getBalioa();
-    }
-
     public void setBalioa(int balioa) {
-        super.setBalioa(balioa);
-    }
-
-    public int getBalioOna(){
-        return super.getBalioOna();
+        super.balioa = balioa;
     }
 
     public void setBalioOna(int balioOna) {
-        super.setBalioOna(balioOna);
+        super.balioOna = balioOna;
     }
 
     public boolean balioOnaDa(int balioa){
-        if(super.getBalioOna() == balioa){
+        if(super.balioOna == balioa){
             return true;
         }
         else{
