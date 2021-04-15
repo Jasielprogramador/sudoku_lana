@@ -1,6 +1,5 @@
 package model.sudoku;
 
-import model.gelaxka.Gelaxka;
 import model.modelutils.Enumeratzailea;
 import model.modelutils.Timerra;
 
