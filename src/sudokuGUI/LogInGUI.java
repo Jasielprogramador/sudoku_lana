@@ -147,7 +147,10 @@ public class LogInGUI extends JFrame implements Observer{
 				int zailtasuna = Integer.parseInt(textField.getText());
 				if (zailtasuna > 3 || zailtasuna < 1) {
 					JOptionPane.showMessageDialog(null, "Mesedez 1 eta 3 artean dagoen zbk bat sartu");
-				} else {
+				}
+				else if(txtIzena.getText().equals("")){
+					JOptionPane.showMessageDialog(null, "Mesedez sar ezazu izen bat");
+				}else {
 					Sudoku partidakoSudoku = SudokuLib.getInstance().getSudokuBat(textField.getText());
 					JokoMatrizea.getInstance().setSudoku(partidakoSudoku);
 

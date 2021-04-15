@@ -1,6 +1,7 @@
 package model;
 
 import model.modelutils.Reader;
+import model.sudoku.SudokuLib;
 
 public class Session {
 
