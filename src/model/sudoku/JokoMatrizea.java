@@ -113,4 +113,137 @@ public class JokoMatrizea extends Observable {
 
         return bool;
     }
+
+    public int[] soleCandidate(){
+        int[] emaitza = new int[3];
+        boolean[] lista = new boolean[9];
+        for (int i = 0;i<lista.length;i++){
+            lista[i] = false;
+        }
+        boolean aurkitua = false;
+        int i = 0;
+        while(i<9 && !aurkitua){
+            int j = 0;
+            while(j<9 && !aurkitua){
+                if(jokokoSudoku[i][j] == 0) {
+                    errenkadaBegiratu(lista, i);
+                    zutabeaBegiratu(lista, j);
+                    barrukoMatrizeaBegiratu(lista, j);
+                    int[] aux = konprobatu(lista);
+                    if(aux[1] == 1){
+                        aurkitua = true;
+                        emaitza[0] = aux[0];
+                        emaitza[1] = i+1;
+                        emaitza[2] = j+1;
+                    }
+                }
+                j++;
+            }
+            i++;
+        }
+        return emaitza;
+    }
+
+    private void errenkadaBegiratu(boolean[] lista,int errenkada){
+        for(int j = 0;j<9;j++){
+            if(jokokoSudoku[errenkada][j] != 0){
+                lista[jokokoSudoku[errenkada][j]-1] = true;
+            }
+        }
+    }
+
+    private void zutabeaBegiratu(boolean[] lista,int zutabea){
+        for(int i = 0;i<9;i++){
+            if(jokokoSudoku[i][zutabea] != 0){
+                lista[jokokoSudoku[i][zutabea]-1] = true;
+            }
+        }
+    }
+
+    private void barrukoMatrizeaBegiratu(boolean[] lista,int zutabea){
+        if(zutabea == 1 || zutabea == 4 || zutabea == 7) {
+            zutabea--;
+        }
+        else if(zutabea == 2 || zutabea == 5 || zutabea == 8){
+            zutabea--;
+            zutabea--;
+        }
+        for (int j = zutabea; j < zutabea + 3; j++) {
+            for (int i = 0; i < 3; i++) {
+                if(jokokoSudoku[i][j] != 0){
+                    lista[jokokoSudoku[i][j]-1] = true;
+                }
+            }
+        }
+    }
+
+    private int[] konprobatu(boolean[] lista){
+        int kont = 0;
+        int[] emaitza = new int[2];
+        for(int i =0;i<lista.length;i++){
+            if(lista[i] == true){
+                kont ++;
+            }
+            else{
+                emaitza[0]=i+1;
+            }
+        }
+        if(kont == lista.length-1){
+            emaitza[1] = 1;
+        }
+        else{
+            emaitza[1] = 0;
+        }
+        return emaitza;
+    }
+
+    public int[] uniqueCandidate(){
+        int[] emaitza = new int[3];
+        boolean aurkitua = false;
+        int aux;
+        int i = 0;
+        while(i<9 && !aurkitua) {
+            int j = 0;
+            while (j < 9 && !aurkitua) {
+                if (jokokoSudoku[i][j] == 0) {
+                    aux =
+                }
+            }
+        }
+    }
+
+    private void balioaErrenkadanBilatu(int errenkada, int zutabea, int balioa){
+        int kont = 0;
+        for(int j = 0;j<9;j++){
+            if(jokokoSudoku[errenkada][j] == balioa){
+                kont++;
+            }
+            else if(j - zutabea <3){
+                kont++;
+            }
+        }
+    }
+
+    private void balioaZutabeanBilatu(int errenkada, int zutabea, int balioa){
+        int kont = 0;
+        for(int i = 0;i<9;i++){
+            if(jokokoSudoku[i][zutabea] == balioa){
+                kont++;
+            }
+            else if(i - errenkada <3){
+                kont++;
+            }
+        }
+    }
+
+    private int zutabekoLehenBalioaLortu(int zutabea){
+        int aux = 0;
+        for(int i = 0;i<9;i++){
+            if(jokokoSudoku[i][zutabea] != 0){
+                aux = jokokoSudoku[i][zutabea];
+                break;
+            }
+        }
+        return aux;
+    }
 }

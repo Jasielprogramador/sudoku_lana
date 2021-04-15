@@ -285,6 +285,7 @@ public class SudokuGUI extends JFrame implements Observer {
 	private JButton getBtnLaguntza() {
 		if (btnLaguntza == null) {
 			btnLaguntza = new JButton("Laguntza");
+			btnLaguntza.addActionListener(getController());
 		}
 		return btnLaguntza;
 	}
@@ -347,7 +348,7 @@ public class SudokuGUI extends JFrame implements Observer {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			Button btn = (Button) arg0.getSource();
+			JButton btn = (JButton) arg0.getSource();
 
 			if (btn.equals(btnAldatu)) {
 
@@ -397,14 +398,14 @@ public class SudokuGUI extends JFrame implements Observer {
 			else if(btn.equals(btnLaguntza)){
 
 				//Sole candidate
-				boolean aurkitua = false;
-				int i = 0;
-				while(i<9 && !aurkitua){
-					int j = 0;
-					while(j<9 && !aurkitua){
+				int[] emaitza = JokoMatrizea.getInstance().soleCandidate();
+				textArea.append("Estrategia: Unique \t" +
+						"Casilla ("+emaitza[1]+", "+emaitza[2]+") \t" +
+						"Valor "+emaitza[0]);
 
-					}
-				}
+				//Unique candidate
+
+
 			}
 		}
 	}
