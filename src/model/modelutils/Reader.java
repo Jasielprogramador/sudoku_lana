@@ -53,7 +53,6 @@ public class Reader {
 
 		Sudoku sudoku=new Sudoku();
 
-
 		while(errenkada!=18) {
 			unekoLerroa=br.readLine();
 			char[] lista = unekoLerroa.toCharArray();
