@@ -325,7 +325,7 @@ public class SudokuGUI extends JFrame implements Observer {
 			case SOLE_PISTA:
 				int [] emaitza= (int[]) lista.get(1);
 				textArea.append("Sole candidate estrategia: \n" +
-						"Gelaxka (þø↓"+emaitza[1]+", →"+emaitza[2]+") \n" +
+						"Gelaxka (↓"+emaitza[1]+", →"+emaitza[2]+") \n" +
 						"Balioa "+emaitza[0]);
 
 				break;
