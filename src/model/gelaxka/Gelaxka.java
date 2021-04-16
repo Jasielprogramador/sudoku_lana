@@ -10,4 +10,7 @@ public class Gelaxka {
 		balioa=pBalio;
 	}
 
+	public int getBalioa() {
+		return balioa;
+	}
 }

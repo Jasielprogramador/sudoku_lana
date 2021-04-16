@@ -1,6 +1,6 @@
 package model.modelutils;
 
 public enum Enumeratzailea {
-    BALIO_TXARRA,
+    SOLE_PISTA,
     BUKATUTA
 }

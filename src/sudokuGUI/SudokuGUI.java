@@ -322,14 +322,14 @@ public class SudokuGUI extends JFrame implements Observer {
 		Enumeratzailea enumeratzailea= (Enumeratzailea) lista.get(0);
 
 		switch (enumeratzailea){
-			case BALIO_TXARRA:
-				if(lista.size()==2){
-					textArea.append("\nKarratuko zenbakia errepikatzen da");
-				}
-				else{
-					textArea.append("\nZenbakiak talkak ditu ("+lista.get(1)+","+lista.get(2)+") koordenatuetako balioekin");
-				}
+			case SOLE_PISTA:
+				int [] emaitza= (int[]) lista.get(1);
+				textArea.append("Sole candidate estrategia: \n" +
+						"Gelaxka ("+emaitza[1]+", "+emaitza[2]+") \n" +
+						"Balioa "+emaitza[0]);
+
 				break;
+
 			case BUKATUTA:
 				System.out.println("-------------");
 				System.out.println("bokadillo txorizo mesi: "+ JokoMatrizea.getInstance().puntuazioaKalkulatu());
@@ -379,7 +379,7 @@ public class SudokuGUI extends JFrame implements Observer {
 							}
 
 							//konprobatu sartutako balioa ondo dagoen
-							JokoMatrizea.getInstance().ondoDago(balioErrenkada, balioZutabea, zbk);
+							//JokoMatrizea.getInstance().ondoDago(balioErrenkada, balioZutabea, zbk);
 
 						} else {
 							JOptionPane.showMessageDialog(null, "Bakarrik 1 eta 9 arteko zenbakiak jarri ditzazkezu");
@@ -396,12 +396,10 @@ public class SudokuGUI extends JFrame implements Observer {
 
 			}
 			else if(btn.equals(btnLaguntza)){
+				textArea.setText("");
 
 				//Sole candidate
 				int[] emaitza = JokoMatrizea.getInstance().soleCandidate();
-				textArea.append("Estrategia: Unique \t" +
-						"Casilla ("+emaitza[1]+", "+emaitza[2]+") \t" +
-						"Valor "+emaitza[0]);
 
 				//Unique candidate
 

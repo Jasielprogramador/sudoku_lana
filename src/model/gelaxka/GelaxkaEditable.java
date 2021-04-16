@@ -17,7 +17,7 @@ public class GelaxkaEditable extends Gelaxka {
     }
 
     public void setBalioOna(int balioOna) {
-        balioOna = balioOna;
+        this.balioOna = balioOna;
     }
 
     public boolean balioOnaDa(int balioa){
