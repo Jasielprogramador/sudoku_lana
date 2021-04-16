@@ -6,6 +6,7 @@ import model.gelaxka.GelaxkaFactory;
 import model.gelaxka.GelaxkaNotEditable;
 import model.modelutils.Enumeratzailea;
 import model.modelutils.Timerra;
+import sun.java2d.x11.XSurfaceData;
 
 import java.util.Arrays;
 import java.util.Observable;
@@ -140,8 +141,10 @@ public class JokoMatrizea extends Observable {
 
 
 
-    //////////////////////////////////////LA MIERDA DE METODOS/////////////////////////////////////////////
 
+    //----------------------------------------------------------------------------------------------------------------
+
+    /*SOLE CANDIDATE*/
     public int[] soleCandidate(){
         int[] emaitza = new int[3];
         boolean[] lista = new boolean[9];
@@ -154,13 +157,18 @@ public class JokoMatrizea extends Observable {
             int j = 0;
             while(j<9 && !aurkitua){
                 if(sudoku[i][j].getBalioa() == 0) {
-                    errenkadaBegiratu(lista, i);
-                    zutabeaBegiratu(lista, j);
-                    barrukoMatrizeaBegiratu(lista, j);
-                    int[] aux = konprobatu(lista);
-                    if(aux[1] == 1){
+                    if(errenkadaBegiratu(lista, i)){
                         aurkitua = true;
-                        emaitza[0] = aux[0];
+                    }
+                    else if(zutabeaBegiratu(lista, j)){
+                        aurkitua = true;
+                    }
+                    else if(barrukoMatrizeaBegiratu(lista, j)){
+                        aurkitua = true;
+                    }
+                    if(aurkitua){
+                        aurkitua = true;
+                        emaitza[0] = konprobatu(lista)[0];
                         emaitza[1] = i+1;
                         emaitza[2] = j+1;
                     }
@@ -176,23 +184,35 @@ public class JokoMatrizea extends Observable {
         return emaitza;
     }
 
-    private void errenkadaBegiratu(boolean[] lista,int errenkada){
+    private boolean errenkadaBegiratu(boolean[] lista,int errenkada){
         for(int j = 0;j<9;j++){
             if(sudoku[errenkada][j].getBalioa() != 0){
                 lista[ sudoku[errenkada][j].getBalioa() -1] = true;
             }
         }
+        if(konprobatu(lista)[1] == 1){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
-    private void zutabeaBegiratu(boolean[] lista,int zutabea){
+    private boolean zutabeaBegiratu(boolean[] lista,int zutabea){
         for(int i = 0;i<9;i++){
             if(sudoku[i][zutabea].getBalioa() != 0){
                 lista[ sudoku[i][zutabea].getBalioa() -1] = true;
             }
         }
+        if(konprobatu(lista)[1] == 1){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
-    private void barrukoMatrizeaBegiratu(boolean[] lista,int zutabea){
+    private boolean barrukoMatrizeaBegiratu(boolean[] lista,int zutabea){
         if(zutabea == 1 || zutabea == 4 || zutabea == 7) {
             zutabea--;
         }
@@ -203,9 +223,15 @@ public class JokoMatrizea extends Observable {
         for (int j = zutabea; j < zutabea + 3; j++) {
             for (int i = 0; i < 3; i++) {
                 if(sudoku[i][j].getBalioa() != 0){
-                    lista[ sudoku[i][j].getBalioa() -1] = true;
+                    lista[sudoku[i][j].getBalioa() -1] = true;
                 }
             }
+        }
+        if(konprobatu(lista)[1] == 1){
+            return true;
+        }
+        else{
+            return false;
         }
     }
 
@@ -230,53 +256,107 @@ public class JokoMatrizea extends Observable {
     }
 
 
-//    public int[] uniqueCandidate(){
-//        int[] emaitza = new int[3];
-//        boolean aurkitua = false;
-//        int aux;
-//        int i = 0;
-//        while(i<9 && !aurkitua) {
-//            int j = 0;
-//            while (j < 9 && !aurkitua) {
-//                if (sudoku[i][j].getBalioa() == 0) {
-//                    aux =
-//                }
-//            }
-//        }
-//    }
+    //----------------------------------------------------------------------------------------------------------------
 
-    private void balioaErrenkadanBilatu(int errenkada, int zutabea, int balioa){
-        int kont = 0;
+    //UNIQUE CANDIDATE
+
+    public int[] uniqueCandidate(){
+        int[] emaitza = new int[3];
+
+        boolean aurkitua = false;
+
+        int i = 0;
+        while(i<9 && !aurkitua) {
+            int j = 0;
+            while (j < 9 && !aurkitua) {
+                if(sudoku[i][j].getBalioa() == 0) {
+                    int a = 0;
+                    while(a<9 && aurkitua){
+                        int zutabea = j;
+                        int errenkada = i;
+                        if(zutabea == 1 || zutabea == 4 || zutabea == 7) {
+                            zutabea--;
+                        }
+                        else if(zutabea == 2 || zutabea == 5 || zutabea == 8){
+                            zutabea--;
+                            zutabea--;
+                        }
+
+                        if(balioaZutabeanBilatu(a,zutabea+1)){
+                            if(!balioaZutabeanBilatu(a,zutabea+2)){
+                                //MIRAR EN LA MATRIZ
+                            }
+                        }
+                        else{
+                            //MIRAR EN LA MATRIZ
+                        }
+
+
+                        if(errenkada == 1 || errenkada == 4 || errenkada == 7) {
+                            errenkada--;
+                        }
+                        else if(errenkada == 2 || errenkada == 5 || errenkada == 8){
+                            errenkada--;
+                            errenkada--;
+                        }
+
+                        if(balioaErrenkadanBilatu(a,errenkada+1)){
+                            if(!balioaErrenkadanBilatu(a,errenkada+2)){
+                                //MIRAR EN LA MATRIZ
+                            }
+                        }
+                        else{
+                            //MIRAR EN LA MATRIZ
+                        }
+                    }
+                }
+            }
+        }
+        return emaitza;
+    }
+
+    private boolean balioaErrenkadanBilatu(int balioa, int errenkada){
+        boolean emaitza = false;
         for(int j = 0;j<9;j++){
             if(sudoku[errenkada][j].getBalioa() == balioa){
-                kont++;
-            }
-            else if(j - zutabea <3){
-                kont++;
-            }
-        }
-    }
-
-    private void balioaZutabeanBilatu(int errenkada, int zutabea, int balioa){
-        int kont = 0;
-        for(int i = 0;i<9;i++){
-            if(sudoku[i][zutabea].getBalioa() == balioa){
-                kont++;
-            }
-            else if(i - errenkada <3){
-                kont++;
-            }
-        }
-    }
-
-    private int zutabekoLehenBalioaLortu(int zutabea){
-        int aux = 0;
-        for(int i = 0;i<9;i++){
-            if(sudoku[i][zutabea].getBalioa() != 0){
-                aux = sudoku[i][zutabea].getBalioa();
+                emaitza = true;
                 break;
             }
         }
-        return aux;
+        return emaitza;
+    }
+
+    private boolean balioaZutabeanBilatu(int balioa,int zutabea){
+        boolean emaitza = false;
+        for(int i = 0;i<9;i++){
+            if(sudoku[i][zutabea].getBalioa() == balioa){
+                emaitza = true;
+                break;
+            }
+        }
+        return emaitza;
+    }
+
+    private boolean barrukoMatrizekoBalioakBegiratu(boolean[] lista,int zutabea){
+        if(zutabea == 1 || zutabea == 4 || zutabea == 7) {
+            zutabea--;
+        }
+        else if(zutabea == 2 || zutabea == 5 || zutabea == 8){
+            zutabea--;
+            zutabea--;
+        }
+        for (int j = zutabea; j < zutabea + 3; j++) {
+            for (int i = 0; i < 3; i++) {
+                if(sudoku[i][j].getBalioa() != 0){
+                    lista[sudoku[i][j].getBalioa() -1] = true;
+                }
+            }
+        }
+        if(konprobatu(lista)[1] == 1){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }

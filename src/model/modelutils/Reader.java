@@ -66,6 +66,7 @@ public class Reader {
 				for(char i: lista) {
 					int intLag=Character.getNumericValue(i);
 					//hau aldatuta dago
+
 					sudoku.setSudokuHutsaBalioa(zut,errenkada,intLag);
 					zut++;
 				}

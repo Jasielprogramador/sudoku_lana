@@ -323,12 +323,18 @@ public class SudokuGUI extends JFrame implements Observer {
 
 		switch (enumeratzailea){
 			case SOLE_PISTA:
-				int [] emaitza= (int[]) lista.get(1);
+				int [] emaitza1= (int[]) lista.get(1);
 				textArea.append("Sole candidate estrategia: \n" +
-						"Gelaxka (↓"+emaitza[1]+", →"+emaitza[2]+") \n" +
-						"Balioa "+emaitza[0]);
+						"Gelaxka (↓"+emaitza1[1]+", →"+emaitza1[2]+") \n" +
+						"Balioa "+emaitza1[0]);
 
 				break;
+
+			case UNIQUE_PISTA:
+				int [] emaitza2= (int[]) lista.get(1);
+				textArea.append("Unique candidate estrategia: \n" +
+						"Gelaxka (↓"+emaitza2[1]+", →"+emaitza2[2]+") \n" +
+						"Balioa "+emaitza2[0]);
 
 			case BUKATUTA:
 				System.out.println("-------------");
@@ -401,7 +407,6 @@ public class SudokuGUI extends JFrame implements Observer {
 				//Sole candidate
 				int[] emaitza = JokoMatrizea.getInstance().soleCandidate();
 
-				//Unique candidate
 
 
 			}
