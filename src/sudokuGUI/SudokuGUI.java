@@ -405,9 +405,10 @@ public class SudokuGUI extends JFrame implements Observer {
 				textArea.setText("");
 
 				//Sole candidate
-				int[] emaitza = JokoMatrizea.getInstance().soleCandidate();
+				JokoMatrizea.getInstance().soleCandidate();
 
-
+				//Unique candidate
+				JokoMatrizea.getInstance().uniqueCandidate();
 
 			}
 		}

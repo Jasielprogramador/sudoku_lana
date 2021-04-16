@@ -312,6 +312,10 @@ public class JokoMatrizea extends Observable {
                 }
             }
         }
+
+
+        setChanged();
+        notifyObservers(Arrays.asList(Enumeratzailea.SOLE_PISTA,emaitza));
         return emaitza;
     }
 
