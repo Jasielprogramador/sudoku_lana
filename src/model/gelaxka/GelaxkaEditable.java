@@ -5,6 +5,8 @@ import model.gelaxka.Gelaxka;
 
 public class GelaxkaEditable extends Gelaxka {
 
+    private int balioOna;
+
     public GelaxkaEditable(int pBalio){
         super(pBalio);
     }
@@ -15,11 +17,11 @@ public class GelaxkaEditable extends Gelaxka {
     }
 
     public void setBalioOna(int balioOna) {
-        super.balioOna = balioOna;
+        balioOna = balioOna;
     }
 
     public boolean balioOnaDa(int balioa){
-        if(super.balioOna == balioa){
+        if(balioOna == balioa){
             return true;
         }
         else{

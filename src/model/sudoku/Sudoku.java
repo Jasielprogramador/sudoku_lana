@@ -11,7 +11,7 @@ public class Sudoku {
     private int[][] sudokuHutsa=new int[9][9];
 
 	private int maila=0;
-
+	
 
 	public Sudoku() {
 //		setZailtasunak();
