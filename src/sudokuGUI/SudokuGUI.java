@@ -322,7 +322,7 @@ public class SudokuGUI extends JFrame implements Observer {
 		//HONI DEITZEN ZAION BAKOITZEAN ENUM KLASEKO BALIOA JARRIKO ZAIO LISTAKO LEHEN POSIZIOAN
 		List lista=(List) arg;
 
-		Enumeratzailea enumeratzailea= (Enumeratzailea) lista.get(0);
+		Enumeratzailea enumeratzailea = (Enumeratzailea) lista.get(0);
 
 		switch (enumeratzailea){
 			case SOLE_PISTA:
