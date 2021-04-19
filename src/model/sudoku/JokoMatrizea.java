@@ -117,7 +117,10 @@ public class JokoMatrizea extends Observable {
 
         for (int i=0;i<9;i++) {
             for (int j = 0; j < 9; j++) {
-                hasierakoHautagaiakLortu(i,j);
+                int unekoa=sudokum.getSudokuHutsaBalioa(i,j);
+                if(unekoa != 0){
+                    hasierakoHautagaiakLortu(i,j);
+                }
             }
         }
     }
