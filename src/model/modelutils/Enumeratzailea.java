@@ -3,5 +3,6 @@ package model.modelutils;
 public enum Enumeratzailea {
     SOLE_PISTA,
     UNIQUE_PISTA,
-    BUKATUTA
+    BUKATUTA,
+    HASIERAKO_PISTA
 }

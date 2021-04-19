@@ -8,6 +8,7 @@ import model.modelutils.Enumeratzailea;
 import model.modelutils.Timerra;
 import sun.java2d.x11.XSurfaceData;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Observable;
 
@@ -31,6 +32,69 @@ public class JokoMatrizea extends Observable {
         return sudoku[errenkada][zutabea];
     }
 
+    public void hasierakoHautagaiakLortu(int i, int j) {
+        boolean[] lista = new boolean[9];
+        for (int a = 0; a < lista.length; a++) {
+            lista[a] = false;
+        }
+
+        hasierakoErrenkadaBegiratu(lista,i);
+        hasierakoZutabeaBegiratu(lista,j);
+        hasierakoMatrizeaBegiratu(lista,j);
+
+        ArrayList<Integer> aux = hasierakoHautagaienListaLortu(lista);
+
+        GelaxkaEditable g = (GelaxkaEditable) lortuGelaxka(i,j);
+        g.setHautagaiak(aux);
+
+        setChanged();
+        notifyObservers(Arrays.asList(Enumeratzailea.HASIERAKO_PISTA, aux));
+
+    }
+
+    private void hasierakoErrenkadaBegiratu(boolean[] lista,int errenkada){
+        for(int j = 0;j<9;j++){
+            if(sudoku[errenkada][j].getBalioa() != 0){
+                lista[ sudoku[errenkada][j].getBalioa() -1] = true;
+            }
+        }
+    }
+
+    private void hasierakoZutabeaBegiratu(boolean[] lista,int zutabea){
+        for(int i = 0;i<9;i++){
+            if(sudoku[i][zutabea].getBalioa() != 0){
+                lista[ sudoku[i][zutabea].getBalioa() -1] = true;
+            }
+        }
+    }
+
+    private void hasierakoMatrizeaBegiratu(boolean[] lista,int zutabea){
+        if(zutabea == 1 || zutabea == 4 || zutabea == 7) {
+            zutabea--;
+        }
+        else if(zutabea == 2 || zutabea == 5 || zutabea == 8){
+            zutabea--;
+            zutabea--;
+        }
+        for (int j = zutabea; j < zutabea + 3; j++) {
+            for (int i = 0; i < 3; i++) {
+                if(sudoku[i][j].getBalioa() != 0){
+                    lista[sudoku[i][j].getBalioa() -1] = true;
+                }
+            }
+        }
+    }
+
+    private ArrayList<Integer> hasierakoHautagaienListaLortu(boolean[] lista){
+        ArrayList<Integer> emaitza = new ArrayList<>();
+        for(int i = 0;i<lista.length;i++){
+            if(lista[i] == false){
+                emaitza.add(i+1);
+            }
+        }
+        return emaitza;
+    }
+
     public void setSudoku(Sudoku sudokum){
 
         maila=sudokum.getMaila();
@@ -48,6 +112,12 @@ public class JokoMatrizea extends Observable {
                 else{
                     sudoku[i][j]=GelaxkaFactory.getInstance().sortuGelaxka(unekoa);
                 }
+            }
+        }
+
+        for (int i=0;i<9;i++) {
+            for (int j = 0; j < 9; j++) {
+                hasierakoHautagaiakLortu(i,j);
             }
         }
     }

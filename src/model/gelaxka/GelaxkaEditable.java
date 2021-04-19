@@ -16,12 +16,8 @@ public class GelaxkaEditable extends Gelaxka {
         hautagaiak = new ArrayList<>();
     }
 
-    public void gehituBalioa(int b){
-        hautagaiak.add(b);
-    }
-
-    public void kenduBalioa(int b){
-        hautagaiak.remove(b);
+    public void setHautagaiak(ArrayList<Integer> lista){
+        hautagaiak = lista;
     }
 
     public void setBalioa(int balioa) {

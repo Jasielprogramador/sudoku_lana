@@ -158,7 +158,9 @@ public class SudokuGUI extends JFrame implements Observer {
 			lblBalioa.setForeground(Color.RED);
 			lblBalioa.setText(zbk);
 		}
-		else lblBalioa.setText("");
+		else {
+			lblBalioa.setText("");
+		}
 
 
 		gridBagLayoutPane.add(lblHautagaiak);
@@ -373,11 +375,22 @@ public class SudokuGUI extends JFrame implements Observer {
 						if (!txtFieldHautagai.getText().equals("") && txtFieldBalioa.getText().equals("")){
 							GelaxkaEditable g = (GelaxkaEditable)JokoMatrizea.getInstance().lortuGelaxka(balioErrenkada,balioZutabea);
 
-							ArrayList<String> lista= (ArrayList<String>) Arrays.stream(txtFieldHautagai.getText().split(" "));
+							List<String> lista= Arrays.asList(txtFieldHautagai.getText().split(" "));
 
+							ArrayList<Integer> listaInt = new ArrayList<>(lista.size());
+							for(String s:lista){
+								listaInt.add(Integer.parseInt(s));
+							}
 
+							g.setHautagaiak(listaInt);
 
-							lblHautatutakoHautagaiak.setText(g);
+							String a = "";
+
+							for(int i = 0;i<listaInt.size();i++){
+								a = listaInt.get(i)+" ";
+							}
+
+							lblHautatutakoHautagaiak.setText(a);
 
 						} else if (zbk >= 1 && zbk <= 9) {
 							textArea.setText("");
