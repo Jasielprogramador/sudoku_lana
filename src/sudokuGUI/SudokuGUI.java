@@ -330,7 +330,6 @@ public class SudokuGUI extends JFrame implements Observer {
 				textArea.append("Sole candidate estrategia: \n" +
 						"Gelaxka (↓"+emaitza1[1]+", →"+emaitza1[2]+") \n" +
 						"Balioa "+emaitza1[0]);
-
 				break;
 
 			case UNIQUE_PISTA:
@@ -338,6 +337,7 @@ public class SudokuGUI extends JFrame implements Observer {
 				textArea.append("Unique candidate estrategia: \n" +
 						"Gelaxka (↓"+emaitza2[1]+", →"+emaitza2[2]+") \n" +
 						"Balioa "+emaitza2[0]);
+				break;
 
 			case HASIERAKO_PISTA:
 				int[] emaitza3 = (int[]) lista.get(1);
@@ -346,6 +346,7 @@ public class SudokuGUI extends JFrame implements Observer {
 					b = b + a + " ";
 				}
 				txtFieldHautagai.setText("EOOOOOOOOO");
+				break;
 
 			case BUKATUTA:
 				System.out.println("-------------");
