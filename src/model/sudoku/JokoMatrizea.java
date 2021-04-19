@@ -55,7 +55,7 @@ public class JokoMatrizea extends Observable {
     private void hasierakoErrenkadaBegiratu(boolean[] lista,int errenkada){
         for(int j = 0;j<9;j++){
             if(sudoku[errenkada][j].getBalioa() != 0){
-                lista[ sudoku[errenkada][j].getBalioa() -1] = true;
+                lista[sudoku[errenkada][j].getBalioa() -1] = true;
             }
         }
     }
@@ -117,7 +117,7 @@ public class JokoMatrizea extends Observable {
 
         for (int i=0;i<9;i++) {
             for (int j = 0; j < 9; j++) {
-                int unekoa=sudokum.getSudokuHutsaBalioa(i,j);
+                int unekoa=sudoku[i][j].getBalioa();
                 if(unekoa != 0){
                     hasierakoHautagaiakLortu(i,j);
                 }
