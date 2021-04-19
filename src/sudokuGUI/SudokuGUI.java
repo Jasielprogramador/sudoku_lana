@@ -339,6 +339,14 @@ public class SudokuGUI extends JFrame implements Observer {
 						"Gelaxka (↓"+emaitza2[1]+", →"+emaitza2[2]+") \n" +
 						"Balioa "+emaitza2[0]);
 
+			case HASIERAKO_PISTA:
+				int[] emaitza3 = (int[]) lista.get(1);
+				String b = "";
+				for(int a : emaitza3){
+					b = b + a + " ";
+				}
+				txtFieldHautagai.setText("EOOOOOOOOO");
+
 			case BUKATUTA:
 				System.out.println("-------------");
 				System.out.println("bokadillo txorizo mesi: "+ JokoMatrizea.getInstance().puntuazioaKalkulatu());
@@ -387,10 +395,10 @@ public class SudokuGUI extends JFrame implements Observer {
 							String a = "";
 
 							for(int i = 0;i<listaInt.size();i++){
-								a = listaInt.get(i)+" ";
+								a = a+listaInt.get(i)+" ";
 							}
 
-							lblHautatutakoHautagaiak.setText(a);
+							txtFieldHautagai.setText(a);
 
 						} else if (zbk >= 1 && zbk <= 9) {
 							textArea.setText("");

@@ -44,8 +44,10 @@ public class JokoMatrizea extends Observable {
 
         ArrayList<Integer> aux = hasierakoHautagaienListaLortu(lista);
 
-        GelaxkaEditable g = (GelaxkaEditable) lortuGelaxka(i,j);
-        g.setHautagaiak(aux);
+        if(lortuGelaxka(i,j) instanceof GelaxkaEditable){
+            GelaxkaEditable g = (GelaxkaEditable) lortuGelaxka(i,j);
+            g.setHautagaiak(aux);
+        }
 
         setChanged();
         notifyObservers(Arrays.asList(Enumeratzailea.HASIERAKO_PISTA, aux));
@@ -63,7 +65,7 @@ public class JokoMatrizea extends Observable {
     private void hasierakoZutabeaBegiratu(boolean[] lista,int zutabea){
         for(int i = 0;i<9;i++){
             if(sudoku[i][zutabea].getBalioa() != 0){
-                lista[ sudoku[i][zutabea].getBalioa() -1] = true;
+                lista[sudoku[i][zutabea].getBalioa() -1] = true;
             }
         }
     }
@@ -117,10 +119,7 @@ public class JokoMatrizea extends Observable {
 
         for (int i=0;i<9;i++) {
             for (int j = 0; j < 9; j++) {
-                int unekoa=sudoku[i][j].getBalioa();
-                if(unekoa != 0){
-                    hasierakoHautagaiakLortu(i,j);
-                }
+                hasierakoHautagaiakLortu(i,j);
             }
         }
     }
@@ -392,7 +391,7 @@ public class JokoMatrizea extends Observable {
 
 
         setChanged();
-        notifyObservers(Arrays.asList(Enumeratzailea.SOLE_PISTA,emaitza));
+        notifyObservers(Arrays.asList(Enumeratzailea.UNIQUE_PISTA,emaitza));
         return emaitza;
     }
 
