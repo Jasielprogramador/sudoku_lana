@@ -7,6 +7,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import model.gelaxka.Gelaxka;
+import model.gelaxka.GelaxkaEditable;
+import model.gelaxka.GelaxkaFactory;
 import model.sudoku.Sudoku;
 import model.sudoku.JokoMatrizea;
 import model.modelutils.Enumeratzailea;
@@ -15,9 +17,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.*;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 
 public class SudokuGUI extends JFrame implements Observer {
 
@@ -369,8 +370,15 @@ public class SudokuGUI extends JFrame implements Observer {
 							zbk = Integer.parseInt(txtFieldBalioa.getText());
 						}
 
-						if (!txtFieldHautagai.getText().equals("") && txtFieldBalioa.getText().equals("")) {
-							lblHautatutakoHautagaiak.setText(txtFieldHautagai.getText());
+						if (!txtFieldHautagai.getText().equals("") && txtFieldBalioa.getText().equals("")){
+							GelaxkaEditable g = (GelaxkaEditable)JokoMatrizea.getInstance().lortuGelaxka(balioErrenkada,balioZutabea);
+
+							ArrayList<String> lista= (ArrayList<String>) Arrays.stream(txtFieldHautagai.getText().split(" "));
+
+
+
+							lblHautatutakoHautagaiak.setText(g);
+
 						} else if (zbk >= 1 && zbk <= 9) {
 							textArea.setText("");
 							lblHautatutakoBalioa.setText(txtFieldBalioa.getText());

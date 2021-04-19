@@ -27,6 +27,10 @@ public class JokoMatrizea extends Observable {
 
     public static JokoMatrizea getInstance(){return instantzia;}
 
+    public Gelaxka lortuGelaxka(int errenkada, int zutabea){
+        return sudoku[errenkada][zutabea];
+    }
+
     public void setSudoku(Sudoku sudokum){
 
         maila=sudokum.getMaila();
