@@ -381,7 +381,6 @@ public class SudokuGUI extends JFrame implements Observer {
 
 						if(txtFieldBalioa.getText().equals("")){
 							sartuDa=true;
-							JOptionPane.showMessageDialog(null, "Zenbaki bat sartu mesedez");
 						}
 						else{
 							zbk = Integer.parseInt(txtFieldBalioa.getText());
