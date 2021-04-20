@@ -345,7 +345,7 @@ public class SudokuGUI extends JFrame implements Observer {
 				for(int a : emaitza3){
 					b = b + a + " ";
 				}
-				txtFieldHautagai.setText("EOOOOOOOOO");
+				txtFieldHautagai.setText(b);
 				break;
 
 			case BUKATUTA:
