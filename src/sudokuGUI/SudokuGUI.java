@@ -383,32 +383,33 @@ public class SudokuGUI extends JFrame implements Observer {
 					JOptionPane.showMessageDialog(null, "Mesedez gelaxka bat sakatu");
 				} else {
 					try {
-						int zbk;
-						if (txtFieldBalioa.getText().equals("")) {
-							zbk = 0;
-						} else {
-							zbk = Integer.parseInt(txtFieldBalioa.getText());
-						}
+						int zbk = Integer.parseInt(txtFieldBalioa.getText());
 
 						if (!txtFieldHautagai.getText().equals("") && txtFieldBalioa.getText().equals("")){
-							GelaxkaEditable g = (GelaxkaEditable)JokoMatrizea.getInstance().lortuGelaxka(balioErrenkada,balioZutabea);
 
-							List<String> lista= Arrays.asList(txtFieldHautagai.getText().split(" "));
+							if(JokoMatrizea.getInstance().lortuGelaxka(balioErrenkada,balioZutabea) instanceof GelaxkaEditable){
+								GelaxkaEditable g = (GelaxkaEditable)JokoMatrizea.getInstance().lortuGelaxka(balioErrenkada,balioZutabea);
 
-							ArrayList<Integer> listaInt = new ArrayList<>(lista.size());
-							for(String s:lista){
-								listaInt.add(Integer.parseInt(s));
+								List<String> lista= Arrays.asList(txtFieldHautagai.getText().split(" "));
+
+								ArrayList<Integer> listaInt = new ArrayList<>(lista.size());
+								for(String s:lista){
+									listaInt.add(Integer.parseInt(s));
+								}
+
+								g.setHautagaiak(listaInt);
+
+								String a = "";
+
+								for(int i = 0;i<listaInt.size();i++){
+									a = a+listaInt.get(i)+" ";
+								}
+
+								txtFieldHautagai.setText(a);
 							}
 
-							g.setHautagaiak(listaInt);
 
-							String a = "";
 
-							for(int i = 0;i<listaInt.size();i++){
-								a = a+listaInt.get(i)+" ";
-							}
-
-							txtFieldHautagai.setText(a);
 
 						} else if (zbk >= 1 && zbk <= 9) {
 							textArea.setText("");
