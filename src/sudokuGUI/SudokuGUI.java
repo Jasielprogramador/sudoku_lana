@@ -356,9 +356,6 @@ public class SudokuGUI extends JFrame implements Observer {
 		}
 
 
-		//TODO: bukaerarako erabiltzaileak sartutako erroreak zuzenean zuzendu daitezke(kolore batez markatu,...)
-
-
 	}
 
 
@@ -387,18 +384,9 @@ public class SudokuGUI extends JFrame implements Observer {
 						}
 
 						//zbk begiratu
-						if (zbk >= 1 && zbk <= 9) {
-							textArea.setText("");
-							lblHautatutakoBalioa.setText(txtFieldBalioa.getText());
-							lblHautatutakoHautagaiak.setText(txtFieldHautagai.getText());
-
-							JokoMatrizea.getInstance().setJokalariarenBalioa(balioErrenkada, balioZutabea, zbk);
-
+						if (zbkTamaina(zbk,sartuDa)){
 							//konprobatu bukatu duen
-							boolean bool = JokoMatrizea.getInstance().emaitzaEgiaztatu();
-
-						} else if (!sartuDa){
-							JOptionPane.showMessageDialog(null, "Bakarrik 1 eta 9 arteko zenbakiak jarri ditzazkezu");
+							JokoMatrizea.getInstance().emaitzaEgiaztatu();
 						}
 
 
@@ -421,6 +409,24 @@ public class SudokuGUI extends JFrame implements Observer {
 				//JokoMatrizea.getInstance().uniqueCandidate();
 
 			}
+		}
+
+		private boolean zbkTamaina(int zbk,boolean sartuDa) {
+			boolean em=false;
+			if (zbk >= 1 && zbk <= 9) {
+				textArea.setText("");
+				lblHautatutakoBalioa.setText(txtFieldBalioa.getText());
+				lblHautatutakoHautagaiak.setText(txtFieldHautagai.getText());
+
+				JokoMatrizea.getInstance().setJokalariarenBalioa(balioErrenkada, balioZutabea, zbk);
+
+				em=true;
+
+			} else if (!sartuDa){
+				JOptionPane.showMessageDialog(null, "Bakarrik 1 eta 9 arteko zenbakiak jarri ditzazkezu");
+			}
+
+			return em;
 		}
 
 		private void begiratuBalioa() {
