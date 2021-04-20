@@ -405,11 +405,9 @@ public class SudokuGUI extends JFrame implements Observer {
 									a = a+listaInt.get(i)+" ";
 								}
 
+								lblHautatutakoHautagaiak.setText(a);
 								txtFieldHautagai.setText(a);
 							}
-
-
-
 
 						} else if (zbk >= 1 && zbk <= 9) {
 							textArea.setText("");
