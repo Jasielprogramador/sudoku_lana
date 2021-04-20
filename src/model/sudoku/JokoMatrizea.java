@@ -125,8 +125,7 @@ public class JokoMatrizea extends Observable {
     }
 
 
-    public void setJokalariarenBalioa(int errenkada, int zut,String zbkString){
-        int zbk=Integer.parseInt(zbkString);
+    public void setJokalariarenBalioa(int errenkada, int zut,int zbk){
 
         GelaxkaEditable uneko= (GelaxkaEditable) sudoku[zut][errenkada];
         uneko.setBalioa(zbk);

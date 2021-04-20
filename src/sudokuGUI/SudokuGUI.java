@@ -347,15 +347,15 @@ public class SudokuGUI extends JFrame implements Observer {
 						"Balioa "+emaitza2[0]);
 				break;
 
-			case HASIERAKO_PISTA:
-				int[] emaitza3 = (int[]) lista.get(1);
-				String b = "";
-				for(int a : emaitza3){
-					b = b + a + " ";
-				}
-				txtFieldHautagai.setText(b);
-				break;
-
+//			case HASIERAKO_PISTA:
+//				int[] emaitza3 = (int[]) lista.get(1);
+//				String b = "";
+//				for(int a : emaitza3){
+//					b = b + a + " ";
+//				}
+//				txtFieldHautagai.setText(b);
+//				break;
+//
 			case BUKATUTA:
 				System.out.println("-------------");
 				System.out.println("bokadillo txorizo mesi: "+ JokoMatrizea.getInstance().puntuazioaKalkulatu());
@@ -383,59 +383,33 @@ public class SudokuGUI extends JFrame implements Observer {
 				} else {
 					try {
 
-						int zbk = 0;
-						if (txtFieldBalioa.getText().equals("") && !txtFieldHautagai.getText().equals("")) {
-							zbk = 0;
-						} else if(!txtFieldBalioa.getText().equals("")){
-							zbk = Integer.parseInt(txtFieldBalioa.getText());
+						boolean sartuDa=false;
+						int zbk=0;
+
+						if(txtFieldBalioa.getText().equals("")){
+							sartuDa=true;
+							JOptionPane.showMessageDialog(null, "Zenbaki bat sartu mesedez");
 						}
-						else if(txtFieldBalioa.getText().equals("") && txtFieldHautagai.getText().equals("")){
+						else{
 							zbk = Integer.parseInt(txtFieldBalioa.getText());
-						}
 
-						if (!txtFieldHautagai.getText().equals("") && txtFieldBalioa.getText().equals("")){
-
-							if(JokoMatrizea.getInstance().lortuGelaxka(balioErrenkada,balioZutabea) instanceof GelaxkaEditable){
-								GelaxkaEditable g = (GelaxkaEditable)JokoMatrizea.getInstance().lortuGelaxka(balioErrenkada,balioZutabea);
-
-								List<String> lista= Arrays.asList(txtFieldHautagai.getText().split(" "));
-
-								ArrayList<Integer> listaInt = new ArrayList<>(lista.size());
-								for(String s:lista){
-									if(!s.equals("")) {
-										listaInt.add(Integer.parseInt(s));
-									}
-								}
-
-								g.setHautagaiak(listaInt);
-
-								String a = "";
-
-								for(int i = 0;i<listaInt.size();i++){
-									a = a+listaInt.get(i)+" ";
-								}
-
-								lblHautatutakoHautagaiak.setText(a);
-
+							if(txtFieldBalioa.getText().equals("")){
+								begiratuBalioa();
 							}
+						}
 
-						} else if (zbk >= 1 && zbk <= 9) {
+						//zbk begiratu
+						if (zbk >= 1 && zbk <= 9) {
 							textArea.setText("");
 							lblHautatutakoBalioa.setText(txtFieldBalioa.getText());
 							lblHautatutakoHautagaiak.setText(txtFieldHautagai.getText());
 
-							JokoMatrizea.getInstance().setJokalariarenBalioa(balioErrenkada, balioZutabea, txtFieldBalioa.getText());
+							JokoMatrizea.getInstance().setJokalariarenBalioa(balioErrenkada, balioZutabea, zbk);
 
 							//konprobatu bukatu duen
 							boolean bool = JokoMatrizea.getInstance().emaitzaEgiaztatu();
-							if (bool) {
-								System.out.println("kaixo");
-							}
 
-							//konprobatu sartutako balioa ondo dagoen
-							//JokoMatrizea.getInstance().ondoDago(balioErrenkada, balioZutabea, zbk);
-
-						} else {
+						} else if (!sartuDa){
 							JOptionPane.showMessageDialog(null, "Bakarrik 1 eta 9 arteko zenbakiak jarri ditzazkezu");
 						}
 
@@ -460,5 +434,36 @@ public class SudokuGUI extends JFrame implements Observer {
 
 			}
 		}
+
+		private void begiratuBalioa() {
+			if(JokoMatrizea.getInstance().lortuGelaxka(balioErrenkada,balioZutabea) instanceof GelaxkaEditable){
+				GelaxkaEditable g = (GelaxkaEditable)JokoMatrizea.getInstance().lortuGelaxka(balioErrenkada,balioZutabea);
+
+				List<String> lista= Arrays.asList(txtFieldHautagai.getText().split(" "));
+
+				ArrayList<Integer> listaInt = new ArrayList<>(lista.size());
+				for(String s:lista){
+					if(!s.equals("")) {
+						listaInt.add(Integer.parseInt(s));
+					}
+				}
+
+				g.setHautagaiak(listaInt);
+
+				String a = "";
+
+				for(int i = 0;i<listaInt.size();i++){
+					a = a+listaInt.get(i)+" ";
+				}
+
+				lblHautatutakoHautagaiak.setText(a);
+
+			}
+		}
+
+
 	}
+
+
+
 }
