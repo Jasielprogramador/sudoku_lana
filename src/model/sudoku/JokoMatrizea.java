@@ -41,10 +41,6 @@ public class JokoMatrizea extends Observable {
     public void hasierakoHautagaiakLortu(int i, int j) {
         boolean[] lista = new boolean[9];
 
-//        for (int a = 0; a < lista.length; a++) {
-//            lista[a] = false;
-//        }
-
         hasierakoErrenkadaBegiratu(lista,i);
         hasierakoZutabeaBegiratu(lista,j);
         hasierakoMatrizeaBegiratu(lista,j);
@@ -55,9 +51,6 @@ public class JokoMatrizea extends Observable {
             GelaxkaEditable g = (GelaxkaEditable) lortuGelaxka(i,j);
             g.setHautagaiak(aux);
         }
-
-//        setChanged();
-//        notifyObservers(Arrays.asList(Enumeratzailea.HASIERAKO_PISTA, aux));
 
     }
 
