@@ -191,6 +191,7 @@ public class SudokuGUI extends JFrame implements Observer {
 					//kargatu hautagai testu moduan
 					txtFieldHautagai.setText(lblHautatutakoHautagaiak.getText());
 
+
 					flag=true;
 				}
 
@@ -347,15 +348,6 @@ public class SudokuGUI extends JFrame implements Observer {
 						"Balioa "+emaitza2[0]);
 				break;
 
-//			case HASIERAKO_PISTA:
-//				int[] emaitza3 = (int[]) lista.get(1);
-//				String b = "";
-//				for(int a : emaitza3){
-//					b = b + a + " ";
-//				}
-//				txtFieldHautagai.setText(b);
-//				break;
-//
 			case BUKATUTA:
 				System.out.println("-------------");
 				System.out.println("bokadillo txorizo mesi: "+ JokoMatrizea.getInstance().puntuazioaKalkulatu());
@@ -382,9 +374,10 @@ public class SudokuGUI extends JFrame implements Observer {
 					JOptionPane.showMessageDialog(null, "Mesedez gelaxka bat sakatu");
 				} else {
 					try {
-
 						boolean sartuDa=false;
 						int zbk=0;
+
+						begiratuBalioa();
 
 						if(txtFieldBalioa.getText().equals("")){
 							sartuDa=true;
@@ -392,10 +385,6 @@ public class SudokuGUI extends JFrame implements Observer {
 						}
 						else{
 							zbk = Integer.parseInt(txtFieldBalioa.getText());
-
-							if(txtFieldBalioa.getText().equals("")){
-								begiratuBalioa();
-							}
 						}
 
 						//zbk begiratu
@@ -436,29 +425,26 @@ public class SudokuGUI extends JFrame implements Observer {
 		}
 
 		private void begiratuBalioa() {
-			if(JokoMatrizea.getInstance().lortuGelaxka(balioErrenkada,balioZutabea) instanceof GelaxkaEditable){
-				GelaxkaEditable g = (GelaxkaEditable)JokoMatrizea.getInstance().lortuGelaxka(balioErrenkada,balioZutabea);
+			GelaxkaEditable g = (GelaxkaEditable) JokoMatrizea.getInstance().lortuGelaxka(balioZutabea,balioErrenkada);
 
-				List<String> lista= Arrays.asList(txtFieldHautagai.getText().split(" "));
+			List<String> lista= Arrays.asList(txtFieldHautagai.getText().split(" "));
 
-				ArrayList<Integer> listaInt = new ArrayList<>(lista.size());
-				for(String s:lista){
-					if(!s.equals("")) {
-						listaInt.add(Integer.parseInt(s));
-					}
+			ArrayList<Integer> listaInt = new ArrayList<>(lista.size());
+			for(String s:lista){
+				if(!s.equals("")) {
+					listaInt.add(Integer.parseInt(s));
 				}
-
-				g.setHautagaiak(listaInt);
-
-				String a = "";
-
-				for(int i = 0;i<listaInt.size();i++){
-					a = a+listaInt.get(i)+" ";
-				}
-
-				lblHautatutakoHautagaiak.setText(a);
-
 			}
+
+			g.setHautagaiak(listaInt);
+
+			String a = "";
+
+			for(int i = 0;i<listaInt.size();i++){
+				a = a+listaInt.get(i)+" ";
+			}
+
+			lblHautatutakoHautagaiak.setText(a);
 		}
 
 
