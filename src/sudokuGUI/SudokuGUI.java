@@ -438,7 +438,7 @@ public class SudokuGUI extends JFrame implements Observer {
 				JokoMatrizea.getInstance().soleCandidate();
 
 				//Unique candidate
-				JokoMatrizea.getInstance().uniqueCandidate();
+				//JokoMatrizea.getInstance().uniqueCandidate();
 
 			}
 		}
