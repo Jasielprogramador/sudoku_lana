@@ -26,6 +26,10 @@ public class GelaxkaEditable extends Gelaxka {
         hautagaiak = new ArrayList<>();
     }
 
+    public ArrayList<Integer> getHautagaiak(){
+        return hautagaiak;
+    }
+
     public void setHautagaiak(ArrayList<Integer> lista){
         hautagaiak = lista;
     }

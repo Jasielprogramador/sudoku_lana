@@ -189,8 +189,17 @@ public class SudokuGUI extends JFrame implements Observer {
 					balioErrenkada=errenkada;
 
 					//kargatu hautagai testu moduan
-					GelaxkaEditable gelEdit=(GelaxkaEditable) partidakoSudoku[zut][errenkada];
-					txtFieldHautagai.setText(gelEdit.toString());
+					if(JokoMatrizea.getInstance().lortuGelaxka(balioErrenkada,balioZutabea) instanceof GelaxkaEditable) {
+						GelaxkaEditable g = (GelaxkaEditable) JokoMatrizea.getInstance().lortuGelaxka(balioErrenkada, balioZutabea);
+
+						String a = "";
+
+						for (int i = 0; i < g.getHautagaiak().size(); i++) {
+							a = a + g.getHautagaiak().get(i) + " ";
+						}
+
+						txtFieldHautagai.setText(a);
+					}
 
 					flag=true;
 				}
