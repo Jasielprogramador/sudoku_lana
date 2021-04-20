@@ -383,7 +383,16 @@ public class SudokuGUI extends JFrame implements Observer {
 					JOptionPane.showMessageDialog(null, "Mesedez gelaxka bat sakatu");
 				} else {
 					try {
-						int zbk = Integer.parseInt(txtFieldBalioa.getText());
+
+						int zbk = 0;
+						if (txtFieldBalioa.getText().equals("") && !txtFieldHautagai.getText().equals("")) {
+							zbk = 0;
+						} else if(!txtFieldBalioa.getText().equals("")){
+							zbk = Integer.parseInt(txtFieldBalioa.getText());
+						}
+						else if(txtFieldBalioa.getText().equals("") && txtFieldHautagai.getText().equals("")){
+							zbk = Integer.parseInt(txtFieldBalioa.getText());
+						}
 
 						if (!txtFieldHautagai.getText().equals("") && txtFieldBalioa.getText().equals("")){
 
@@ -394,7 +403,9 @@ public class SudokuGUI extends JFrame implements Observer {
 
 								ArrayList<Integer> listaInt = new ArrayList<>(lista.size());
 								for(String s:lista){
-									listaInt.add(Integer.parseInt(s));
+									if(!s.equals("")) {
+										listaInt.add(Integer.parseInt(s));
+									}
 								}
 
 								g.setHautagaiak(listaInt);
