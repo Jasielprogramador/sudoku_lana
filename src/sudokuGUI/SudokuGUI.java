@@ -59,7 +59,7 @@ public class SudokuGUI extends JFrame implements Observer {
 	/**
 	 * Create the frame.
 	 */
-	public SudokuGUI(Sudoku partidakoSudoku) {
+	public SudokuGUI(Gelaxka[][] partidakoSudoku) {
 		JokoMatrizea.getInstance().addObserver(this);
 
 		contentPane = new JPanel();
@@ -75,7 +75,7 @@ public class SudokuGUI extends JFrame implements Observer {
 		setVisible(false);
 	}
 
-	private JPanel getSudokuPanel(Sudoku partidakoSudoku) {
+	private JPanel getSudokuPanel(Gelaxka[][] partidakoSudoku) {
 		if (sudokuPanel == null) {
 			sudokuPanel = new JPanel();
 			sudokuPanel.setLayout(new GridLayout(3, 3));
@@ -85,7 +85,7 @@ public class SudokuGUI extends JFrame implements Observer {
 	}
 
 
-	private void matrizeaSortu(Sudoku partidakoSudoku) {
+	private void matrizeaSortu(Gelaxka[][] partidakoSudoku) {
 		for(int l=0;l<3;l++) {
 			for(int z=0;z<3;z++) {
 				sudokuPanel.add(getMatrizeKarratuHandiak(l, z, partidakoSudoku));
@@ -94,7 +94,7 @@ public class SudokuGUI extends JFrame implements Observer {
 	}
 
 
-	private JPanel getMatrizeKarratuHandiak(int lerro,int zutabe,Sudoku partidakoSudoku) {
+	private JPanel getMatrizeKarratuHandiak(int lerro,int zutabe,Gelaxka[][] partidakoSudoku) {
 		//JPanel  gridBagLayout
 		JPanel gridBagLayoutPane = new JPanel();
 
@@ -128,7 +128,7 @@ public class SudokuGUI extends JFrame implements Observer {
 		return gridBagLayoutPane;
 	}
 
-	private JPanel getZenbakienMatrizea(int zut,int errenkada,Sudoku partidakoSudoku) {
+	private JPanel getZenbakienMatrizea(int zut,int errenkada,Gelaxka[][] partidakoSudoku) {
 
 		//JPanel  gridBagLayout
 		JPanel gridBagLayoutPane = new JPanel();
@@ -151,7 +151,8 @@ public class SudokuGUI extends JFrame implements Observer {
 		lblBalioa.setVerticalAlignment(SwingConstants.CENTER);
 		lblBalioa.setFont(new Font("Verdana",1,15));
 
-		int zenbakia=partidakoSudoku.getSudokuHutsaBalioa(zut, errenkada);
+
+		int zenbakia=partidakoSudoku[zut][errenkada].getBalioa();
 		String zbk=String.valueOf(zenbakia);
 
 		if(!zbk.equals("0")){
@@ -160,6 +161,10 @@ public class SudokuGUI extends JFrame implements Observer {
 		}
 		else {
 			lblBalioa.setText("");
+
+			//lortu hautagaiak
+			GelaxkaEditable gelEdit=(GelaxkaEditable) partidakoSudoku[zut][errenkada];
+			lblHautagaiak.setText(gelEdit.toString());
 		}
 
 
@@ -182,6 +187,10 @@ public class SudokuGUI extends JFrame implements Observer {
 
 					balioZutabea=zut;
 					balioErrenkada=errenkada;
+
+					//kargatu hautagai testu moduan
+					GelaxkaEditable gelEdit=(GelaxkaEditable) partidakoSudoku[zut][errenkada];
+					txtFieldHautagai.setText(gelEdit.toString());
 
 					flag=true;
 				}

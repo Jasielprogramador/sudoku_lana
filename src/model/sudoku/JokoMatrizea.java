@@ -18,6 +18,7 @@ public class JokoMatrizea extends Observable {
 
     private int maila;
 
+
     private Gelaxka[][] sudoku=new Gelaxka[9][9];
 
     private static JokoMatrizea instantzia = new JokoMatrizea();
@@ -28,15 +29,21 @@ public class JokoMatrizea extends Observable {
 
     public static JokoMatrizea getInstance(){return instantzia;}
 
+    public Gelaxka[][] getSudoku() {
+        return sudoku;
+    }
+
+
     public Gelaxka lortuGelaxka(int errenkada, int zutabea){
         return sudoku[errenkada][zutabea];
     }
 
     public void hasierakoHautagaiakLortu(int i, int j) {
         boolean[] lista = new boolean[9];
-        for (int a = 0; a < lista.length; a++) {
-            lista[a] = false;
-        }
+
+//        for (int a = 0; a < lista.length; a++) {
+//            lista[a] = false;
+//        }
 
         hasierakoErrenkadaBegiratu(lista,i);
         hasierakoZutabeaBegiratu(lista,j);
@@ -49,8 +56,8 @@ public class JokoMatrizea extends Observable {
             g.setHautagaiak(aux);
         }
 
-        setChanged();
-        notifyObservers(Arrays.asList(Enumeratzailea.HASIERAKO_PISTA, aux));
+//        setChanged();
+//        notifyObservers(Arrays.asList(Enumeratzailea.HASIERAKO_PISTA, aux));
 
     }
 

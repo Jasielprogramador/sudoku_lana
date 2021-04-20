@@ -154,7 +154,7 @@ public class LogInGUI extends JFrame implements Observer{
 					Sudoku partidakoSudoku = SudokuLib.getInstance().getSudokuBat(textField.getText());
 					JokoMatrizea.getInstance().setSudoku(partidakoSudoku);
 
-					SudokuGUI sud = new SudokuGUI(partidakoSudoku);
+					SudokuGUI sud = new SudokuGUI(JokoMatrizea.getInstance().getSudoku());
 
 					Timerra.getInstance().timerraHasi();
 

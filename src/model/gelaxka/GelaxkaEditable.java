@@ -11,6 +11,16 @@ public class GelaxkaEditable extends Gelaxka {
 
     private ArrayList<Integer> hautagaiak;
 
+    @Override
+    public String toString() {
+        String emma=hautagaiak.toString();
+        emma=emma.replace("[","");
+        emma=emma.replace("]","");
+        emma=emma.replace(","," ");
+
+        return emma;
+    }
+
     public GelaxkaEditable(int pBalio){
         super(pBalio);
         hautagaiak = new ArrayList<>();
