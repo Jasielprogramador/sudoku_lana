@@ -189,8 +189,7 @@ public class SudokuGUI extends JFrame implements Observer {
 					balioErrenkada=errenkada;
 
 					//kargatu hautagai testu moduan
-					GelaxkaEditable gelEdit=(GelaxkaEditable) partidakoSudoku[zut][errenkada];
-					txtFieldHautagai.setText(gelEdit.toString());
+					txtFieldHautagai.setText(lblHautatutakoHautagaiak.getText());
 
 					flag=true;
 				}
@@ -417,7 +416,7 @@ public class SudokuGUI extends JFrame implements Observer {
 								}
 
 								lblHautatutakoHautagaiak.setText(a);
-								txtFieldHautagai.setText(a);
+
 							}
 
 						} else if (zbk >= 1 && zbk <= 9) {
