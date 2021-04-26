@@ -14,15 +14,8 @@ public class Sudoku {
 	
 
 	public Sudoku() {
-//		setZailtasunak();
 	}
 
-//	private void setZailtasunak() {
-//		matrizeak.put(1, new ArrayList<>());
-//		matrizeak.put(2, new ArrayList<>());
-//		matrizeak.put(3, new ArrayList<>());
-//
-//	}
 
 	public void setEmaitzaBalioa(int zut,int errenkada,int balioa){
 		emaitza[errenkada][zut]=balioa;
