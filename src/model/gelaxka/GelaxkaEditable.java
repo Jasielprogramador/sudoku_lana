@@ -42,12 +42,7 @@ public class GelaxkaEditable extends Gelaxka {
         this.balioOna = balioOna;
     }
 
-    public boolean balioOnaDa(int balioa){
-        if(balioOna == balioa){
-            return true;
-        }
-        else{
-            return false;
-        }
+    public boolean balioOnaDa(){
+        return (balioOna == super.balioa);
     }
 }

@@ -43,7 +43,7 @@ public class JokoMatrizea extends Observable {
 
         hasierakoErrenkadaBegiratu(lista,i);
         hasierakoZutabeaBegiratu(lista,j);
-        hasierakoMatrizeaBegiratu(lista,j);
+        hasierakoMatrizeaBegiratu(lista,j,i);
 
         ArrayList<Integer> aux = hasierakoHautagaienListaLortu(lista);
 
@@ -70,21 +70,8 @@ public class JokoMatrizea extends Observable {
         }
     }
 
-    private void hasierakoMatrizeaBegiratu(boolean[] lista,int zutabea){
-        if(zutabea == 1 || zutabea == 4 || zutabea == 7) {
-            zutabea--;
-        }
-        else if(zutabea == 2 || zutabea == 5 || zutabea == 8){
-            zutabea--;
-            zutabea--;
-        }
-        for (int j = zutabea; j < zutabea + 3; j++) {
-            for (int i = 0; i < 3; i++) {
-                if(sudoku[i][j].getBalioa() != 0){
-                    lista[sudoku[i][j].getBalioa() -1] = true;
-                }
-            }
-        }
+    private void hasierakoMatrizeaBegiratu(boolean[] lista,int zutabea,int errenkada){
+        barrukoMatBegiratu(lista, zutabea,errenkada);
     }
 
     private ArrayList<Integer> hasierakoHautagaienListaLortu(boolean[] lista){
@@ -101,7 +88,7 @@ public class JokoMatrizea extends Observable {
 
         maila=sudokum.getMaila();
 
-        //erabiltzaile balioa
+        //jokoko matrizea kargatu
         for (int i=0;i<9;i++){
             for (int j=0;j<9;j++){
                 int unekoa=sudokum.getSudokuHutsaBalioa(i,j);
@@ -117,6 +104,7 @@ public class JokoMatrizea extends Observable {
             }
         }
 
+        //hautagaiak kargatu
         for (int i=0;i<9;i++) {
             for (int j = 0; j < 9; j++) {
                 hasierakoHautagaiakLortu(i,j);
@@ -126,17 +114,16 @@ public class JokoMatrizea extends Observable {
 
 
     public void setJokalariarenBalioa(int errenkada, int zut,int zbk){
-
         GelaxkaEditable uneko= (GelaxkaEditable) sudoku[zut][errenkada];
         uneko.setBalioa(zbk);
         sudoku[zut][errenkada]=uneko;
     }
 
 
-
     public void laguntzaKopHanditu(){
         laguntzaKop++;
     }
+
 
     public boolean emaitzaEgiaztatu(){
         boolean emaitza = true;
@@ -144,10 +131,8 @@ public class JokoMatrizea extends Observable {
         while(i< 9 && emaitza){
             int j = 0;
             while(j< 9 && emaitza){
-                int g = sudoku[i][j].getBalioa();
-                //FIXME: ez dakit nola begiratu balioa!=balioOna rekin
-                if(g==0){  //g!=sudoku.getEmaitzaBalioa(j,i)
-                    emaitza=false;
+                if(sudoku[i][j] instanceof GelaxkaEditable ){
+                    if( !((GelaxkaEditable) sudoku[i][j]).balioOnaDa() ) emaitza=false;
                 }
                 j++;
             }
@@ -162,59 +147,46 @@ public class JokoMatrizea extends Observable {
 
 
     public String puntuazioaKalkulatu(){
-        double puntuazioa = 0.0;
+        double puntuazioa;
         double denbora = (Timerra.getInstance().igarotakoDenbora())/1000; //segundutan
         puntuazioa = (3000* maila)/(denbora+(30*laguntzaKop));
 
         return String.format("%.2f", puntuazioa);
     }
 
-/*
-    public boolean ondoDago(int errenkada, int zut, int balioa){
 
-        //TODO: metodoa kendu daiteke ....
-        boolean bool=true;
-        //zutabea begiratu
-        for(int i=0;i<9;i++){
-            if(i!=zut && jokokoSudoku[i][errenkada]==balioa){
-                setChanged();
-                notifyObservers(Arrays.asList(Enumeratzailea.BALIO_TXARRA,errenkada+1,i+1));
-                bool=false;
-            }
-        }
-
-        //errenkada begiratu
-        for(int j=0;j<9;j++){
-            if(j!=errenkada && jokokoSudoku[zut][j]==balioa){
-                setChanged();
-                notifyObservers(Arrays.asList(Enumeratzailea.BALIO_TXARRA,j+1,zut+1));  //Arrays.asList(zut,j)
-                bool=false;
-            }
-        }
-
-        //karratua begiratu
+    private boolean barrukoMatBegiratu(boolean[] lista, int zutabea,int errenkada) {
         int errenkadaKarratua=errenkada-(errenkada % 3);
-        int zutKarratua=zut-(zut % 3);
+        int zutKarratua=zutabea-(zutabea % 3);
 
         for (int a=errenkadaKarratua;a<errenkadaKarratua+3;a++){
             for (int b=zutKarratua;b<zutKarratua+3;b++){
-                if(jokokoSudoku[b][a]==balioa){
-                    if(a!=errenkada || b!=zut){  //a==errenkada && b==zut  --logika negatua--> a!=errenkada || b!=zut
-                        setChanged();
-                        notifyObservers(Arrays.asList(Enumeratzailea.BALIO_TXARRA,-1));
-                        bool=false;
-                    }
+                if(sudoku[a][b].getBalioa() != 0) lista[sudoku[a][b].getBalioa() -1] = true;
 
-                }
+            }
+        }
+        return (konprobatu(lista)[1] == 1);
+    }
+
+
+    private boolean errenkadaBegiratu(boolean[] lista,int errenkada){
+        for(int j = 0;j<9;j++){
+            if(sudoku[errenkada][j].getBalioa() != 0){
+                lista[ sudoku[errenkada][j].getBalioa() -1] = true;
+            }
+        }
+        return (konprobatu(lista)[1] == 1);
+    }
+
+    private boolean zutabeaBegiratu(boolean[] lista,int zutabea){
+        for(int i = 0;i<9;i++){
+            if(sudoku[i][zutabea].getBalioa() != 0){
+                lista[ sudoku[i][zutabea].getBalioa() -1] = true;
             }
         }
 
-        return bool;
+        return (konprobatu(lista)[1] == 1);
     }
-
- */
-
-
 
 
     //----------------------------------------------------------------------------------------------------------------
@@ -238,7 +210,7 @@ public class JokoMatrizea extends Observable {
                     else if(zutabeaBegiratu(lista, j)){
                         aurkitua = true;
                     }
-                    else if(barrukoMatrizeaBegiratu(lista, j)){
+                    else if(barrukoMatrizeaBegiratu(lista, j,i)){
                         aurkitua = true;
                     }
                     if(aurkitua){
@@ -259,56 +231,11 @@ public class JokoMatrizea extends Observable {
         return emaitza;
     }
 
-    private boolean errenkadaBegiratu(boolean[] lista,int errenkada){
-        for(int j = 0;j<9;j++){
-            if(sudoku[errenkada][j].getBalioa() != 0){
-                lista[ sudoku[errenkada][j].getBalioa() -1] = true;
-            }
-        }
-        if(konprobatu(lista)[1] == 1){
-            return true;
-        }
-        else{
-            return false;
-        }
+
+    private boolean barrukoMatrizeaBegiratu(boolean[] lista,int zutabea,int errenkada){
+        return barrukoMatBegiratu(lista, zutabea,errenkada);
     }
 
-    private boolean zutabeaBegiratu(boolean[] lista,int zutabea){
-        for(int i = 0;i<9;i++){
-            if(sudoku[i][zutabea].getBalioa() != 0){
-                lista[ sudoku[i][zutabea].getBalioa() -1] = true;
-            }
-        }
-        if(konprobatu(lista)[1] == 1){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
-
-    private boolean barrukoMatrizeaBegiratu(boolean[] lista,int zutabea){
-        if(zutabea == 1 || zutabea == 4 || zutabea == 7) {
-            zutabea--;
-        }
-        else if(zutabea == 2 || zutabea == 5 || zutabea == 8){
-            zutabea--;
-            zutabea--;
-        }
-        for (int j = zutabea; j < zutabea + 3; j++) {
-            for (int i = 0; i < 3; i++) {
-                if(sudoku[i][j].getBalioa() != 0){
-                    lista[sudoku[i][j].getBalioa() -1] = true;
-                }
-            }
-        }
-        if(konprobatu(lista)[1] == 1){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
 
     private int[] konprobatu(boolean[] lista){
         int kont = 0;
@@ -321,6 +248,7 @@ public class JokoMatrizea extends Observable {
                 emaitza[0]=i+1;
             }
         }
+
         if(kont == lista.length-1){
             emaitza[1] = 1;
         }
@@ -416,26 +344,7 @@ public class JokoMatrizea extends Observable {
         return emaitza;
     }
 
-    private boolean barrukoMatrizekoBalioakBegiratu(boolean[] lista,int zutabea){
-        if(zutabea == 1 || zutabea == 4 || zutabea == 7) {
-            zutabea--;
-        }
-        else if(zutabea == 2 || zutabea == 5 || zutabea == 8){
-            zutabea--;
-            zutabea--;
-        }
-        for (int j = zutabea; j < zutabea + 3; j++) {
-            for (int i = 0; i < 3; i++) {
-                if(sudoku[i][j].getBalioa() != 0){
-                    lista[sudoku[i][j].getBalioa() -1] = true;
-                }
-            }
-        }
-        if(konprobatu(lista)[1] == 1){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
+//    private boolean barrukoMatrizekoBalioakBegiratu(boolean[] lista,int zutabea){
+//        return barrukoMatBegiratu(lista, zutabea);
+//    }
 }
