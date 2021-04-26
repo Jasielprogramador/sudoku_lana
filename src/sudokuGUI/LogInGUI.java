@@ -143,6 +143,8 @@ public class LogInGUI extends JFrame implements Observer{
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
+			// login sakatzerakoan konprobazio guztiak egin
+			// eta partida hasteko parametroak jarri
 			try {
 				int zailtasuna = Integer.parseInt(textField.getText());
 				if (zailtasuna > 3 || zailtasuna < 1) {
