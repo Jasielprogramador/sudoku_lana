@@ -344,13 +344,14 @@ public class JokoMatrizea extends Observable {
         int zutKarratua = zutabea - (zutabea % 3);
 
         int a=errenkadaKarratua;
-        int b=zutKarratua;
 
         boolean berdina=false;
 
         while(a<errenkadaKarratua+3 && !berdina){
+
+            int b=zutKarratua;
             while(b<zutKarratua+3 && !berdina){
-                berdina= (sudoku[a][b].getBalioa()==balioa);
+                berdina= (sudoku[b][a].getBalioa()==balioa);
                 b++;
             }
             a++;
