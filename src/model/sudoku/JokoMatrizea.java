@@ -318,7 +318,7 @@ public class JokoMatrizea extends Observable {
             //3 zutabeak begiratu
             for(int a=0;a<=2;a++){
                 if(j!= zutabea+a){
-                    zut= zut && balioaZutabeanBilatu(unekoa,zutabea+a);
+                    if( !(sudoku[errenkada+a][j] instanceof GelaxkaNotEditable) ) zut= zut && balioaZutabeanBilatu(unekoa,zutabea+a);
                 }
             }
 
@@ -327,7 +327,7 @@ public class JokoMatrizea extends Observable {
             if(zut){
                 for(int a=0;a<=2;a++){
                     if(i!= errenkada+a){
-                        erre= erre && balioaErrenkadanBilatu(unekoa,errenkada+a);
+                        if( !(sudoku[i][zutabea+a] instanceof GelaxkaNotEditable) ) erre = erre && balioaErrenkadanBilatu(unekoa,errenkada+a);
                     }
                 }
 
