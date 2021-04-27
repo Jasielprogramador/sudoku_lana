@@ -156,6 +156,8 @@ public class JokoMatrizea extends Observable {
 
 
     private boolean barrukoMatBegiratu(boolean[] lista, int zutabea,int errenkada) {
+        //
+
         int errenkadaKarratua=errenkada-(errenkada % 3);
         int zutKarratua=zutabea-(zutabea % 3);
 
@@ -193,13 +195,14 @@ public class JokoMatrizea extends Observable {
 
     /*SOLE CANDIDATE*/
     public int[] soleCandidate(){
+
+        laguntzaKopHanditu();
+
         int[] emaitza = new int[3];
         boolean[] lista = new boolean[9];
-        for (int i = 0;i<lista.length;i++){
-            lista[i] = false;
-        }
         boolean aurkitua = false;
         int i = 0;
+
         while(i<9 && !aurkitua){
             int j = 0;
             while(j<9 && !aurkitua){
@@ -213,8 +216,8 @@ public class JokoMatrizea extends Observable {
                     else if(barrukoMatrizeaBegiratu(lista, j,i)){
                         aurkitua = true;
                     }
+
                     if(aurkitua){
-                        aurkitua = true;
                         emaitza[0] = konprobatu(lista)[0];
                         emaitza[1] = i+1;
                         emaitza[2] = j+1;
@@ -240,6 +243,7 @@ public class JokoMatrizea extends Observable {
     private int[] konprobatu(boolean[] lista){
         int kont = 0;
         int[] emaitza = new int[2];
+
         for(int i =0;i<lista.length;i++){
             if(lista[i] == true){
                 kont ++;
@@ -264,7 +268,7 @@ public class JokoMatrizea extends Observable {
     //UNIQUE CANDIDATE
 
     public int[] uniqueCandidate(){
-        int[] emaitza = new int[3];
+        int[] emaitza=new int[3];
 
         boolean aurkitua = false;
 
@@ -273,73 +277,103 @@ public class JokoMatrizea extends Observable {
             int j = 0;
             while (j < 9 && !aurkitua) {
                 if(sudoku[i][j].getBalioa() == 0) {
-                    int a = 0;
-                    while(a<9 && aurkitua){
-                        int zutabea = j;
-                        int errenkada = i;
-                        if(zutabea == 1 || zutabea == 4 || zutabea == 7) {
-                            zutabea--;
-                        }
-                        else if(zutabea == 2 || zutabea == 5 || zutabea == 8){
-                            zutabea--;
-                            zutabea--;
+                    int unekoa = 1;
+
+                    int errenkada=i-(i % 3);
+                    int zutabea=j-(j % 3);
+
+                    while(unekoa<=9 && !aurkitua){
+                        if( aurkitua=begiratuAlbokoak(unekoa,errenkada,zutabea,i,j) ){
+                            emaitza[0]=unekoa;
+                            emaitza[1]=i;
+                            emaitza[2]=j;
                         }
 
-                        if(balioaZutabeanBilatu(a,zutabea+1)){
-                            if(!balioaZutabeanBilatu(a,zutabea+2)){
-                                //MIRAR EN LA MATRIZ
-                            }
-                        }
-                        else{
-                            //MIRAR EN LA MATRIZ
-                        }
-
-
-                        if(errenkada == 1 || errenkada == 4 || errenkada == 7) {
-                            errenkada--;
-                        }
-                        else if(errenkada == 2 || errenkada == 5 || errenkada == 8){
-                            errenkada--;
-                            errenkada--;
-                        }
-
-                        if(balioaErrenkadanBilatu(a,errenkada+1)){
-                            if(!balioaErrenkadanBilatu(a,errenkada+2)){
-                                //MIRAR EN LA MATRIZ
-                            }
-                        }
-                        else{
-                            //MIRAR EN LA MATRIZ
-                        }
+                        unekoa++;
                     }
+
                 }
+                j++;
             }
+
+            i++;
         }
 
+        //emaitza aurkitu bada
+        if(aurkitua){
+            setChanged();
+            notifyObservers(Arrays.asList(Enumeratzailea.UNIQUE_PISTA,emaitza));
+        }
 
-        setChanged();
-        notifyObservers(Arrays.asList(Enumeratzailea.UNIQUE_PISTA,emaitza));
         return emaitza;
     }
 
+    private boolean begiratuAlbokoak(int unekoa, int errenkada, int zutabea,int i,int j) {
+        boolean zut=true;
+        boolean erre=true;
+
+        boolean karratu=balioaMatrizeanBilatu(unekoa,i,j);
+
+        if(!karratu){
+            //3 zutabeak begiratu
+            for(int a=0;a<=2;a++){
+                if(j!= zutabea+a){
+                    zut= zut && balioaZutabeanBilatu(unekoa,zutabea+a);
+                }
+            }
+
+
+            //aurrekoa ondo joan bada bestea begiratu bestela ezer
+            if(zut){
+                for(int a=0;a<=2;a++){
+                    if(i!= errenkada+a){
+                        erre= erre && balioaErrenkadanBilatu(unekoa,errenkada+a);
+                    }
+                }
+
+            }
+
+        }
+
+        return (zut && erre && !karratu);
+
+    }
+
+    private boolean balioaMatrizeanBilatu(int balioa,int zutabea,int errenkada) {
+        int errenkadaKarratua = errenkada - (errenkada % 3);
+        int zutKarratua = zutabea - (zutabea % 3);
+
+        int a=errenkadaKarratua;
+        int b=zutKarratua;
+
+        boolean berdina=false;
+
+        while(a<errenkadaKarratua+3 && !berdina){
+            while(b<zutKarratua+3 && !berdina){
+                berdina= (sudoku[a][b].getBalioa()==balioa);
+                b++;
+            }
+            a++;
+        }
+
+        return berdina;
+    }
     private boolean balioaErrenkadanBilatu(int balioa, int errenkada){
         boolean emaitza = false;
-        for(int j = 0;j<9;j++){
-            if(sudoku[errenkada][j].getBalioa() == balioa){
-                emaitza = true;
-                break;
-            }
+        int j=0;
+        while (j<9 && !emaitza){
+            if(sudoku[errenkada][j].getBalioa() == balioa) emaitza = true;
+            j++;
         }
         return emaitza;
     }
 
     private boolean balioaZutabeanBilatu(int balioa,int zutabea){
         boolean emaitza = false;
-        for(int i = 0;i<9;i++){
-            if(sudoku[i][zutabea].getBalioa() == balioa){
-                emaitza = true;
-                break;
-            }
+        int i=0;
+        while (i<9 && !emaitza){
+            if(sudoku[i][zutabea].getBalioa() == balioa) emaitza = true;
+            i++;
         }
         return emaitza;
     }
