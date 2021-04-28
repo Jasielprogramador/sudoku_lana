@@ -350,7 +350,7 @@ public class SudokuGUI extends JFrame implements Observer {
 
 			case BUKATUTA:
 				System.out.println("-------------");
-				System.out.println("bokadillo txorizo mesi: "+ JokoMatrizea.getInstance().puntuazioaKalkulatu());
+				System.out.println("bokadillo txorizo mesi: "+ JokoMatrizea.getInstance().puntuazioaKalkulatu()); // basado
 				System.exit(0);
 				break;
 		}
@@ -430,6 +430,7 @@ public class SudokuGUI extends JFrame implements Observer {
 		}
 
 		private void begiratuBalioa() {
+			// hautagaiak matrizean jarri
 			GelaxkaEditable g = (GelaxkaEditable) JokoMatrizea.getInstance().lortuGelaxka(balioZutabea,balioErrenkada);
 
 			List<String> lista= Arrays.asList(txtFieldHautagai.getText().split(" "));

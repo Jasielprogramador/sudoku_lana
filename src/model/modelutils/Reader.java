@@ -16,6 +16,8 @@ public class Reader {
 	private static Reader instance=new Reader();
 
 	public void irakurri() {
+		// sudoku.txt fitxategia irakurri,
+		// sudokuaGorde metodoaren laguntzarekin
 		try {
 
 			File fitxategi = new File ("sudoku.txt");

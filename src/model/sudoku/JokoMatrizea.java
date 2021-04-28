@@ -126,6 +126,7 @@ public class JokoMatrizea extends Observable {
 
 
     public boolean emaitzaEgiaztatu(){
+	// egiaztatu sudokuaren balioak emaitzaren balioeekin konparatuz
         boolean emaitza = true;
         int i = 0;
         while(i< 9 && emaitza){
@@ -154,6 +155,7 @@ public class JokoMatrizea extends Observable {
         return String.format("%.2f", puntuazioa);
     }
 
+    // konprobazio metodoak
 
     private boolean barrukoMatBegiratu(boolean[] lista, int zutabea,int errenkada) {
         //
