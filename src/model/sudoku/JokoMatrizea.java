@@ -277,14 +277,17 @@ public class JokoMatrizea extends Observable {
             int j = 0;
             while (j < 9 && !aurkitua) {
                 if(sudoku[i][j].getBalioa() == 0) {
-                    int unekoa = 1;
+                    GelaxkaEditable gE=(GelaxkaEditable)sudoku[i][j];
+                    ArrayList<Integer> lista=gE.getHautagaiak();
+
+                    int unekoa=0;
 
                     int errenkada=i-(i % 3);
                     int zutabea=j-(j % 3);
 
-                    while(unekoa<=9 && !aurkitua){
-                        if( aurkitua=begiratuAlbokoak(unekoa,errenkada,zutabea,i,j) ){
-                            emaitza[0]=unekoa;
+                    while(unekoa<lista.size() && !aurkitua){
+                        if( aurkitua=begiratuAlbokoak(lista.get(unekoa),errenkada,zutabea,i,j) ){
+                            emaitza[0]=lista.get(unekoa);
                             emaitza[1]=i;
                             emaitza[2]=j;
                         }
@@ -314,11 +317,25 @@ public class JokoMatrizea extends Observable {
 
         boolean karratu=balioaMatrizeanBilatu(unekoa,i,j);
 
+
+        /**
+         * 8 |   | 8
+         * ---------
+         *   | 7 |
+         *   | x |
+         *   | 9 |
+         *
+         *
+         * guztiak dauden kasua
+         *
+         * guztiak egon behar ez direnean GelaxkaNotEditable dagoelako
+         */
+
         if(!karratu){
             //3 zutabeak begiratu
             for(int a=0;a<=2;a++){
                 if(j!= zutabea+a){
-                    if( !(sudoku[errenkada+a][j] instanceof GelaxkaNotEditable) ) zut= zut && balioaZutabeanBilatu(unekoa,zutabea+a);
+                    if( !(sudoku[i][zutabea+a] instanceof GelaxkaNotEditable) ) zut= zut && balioaZutabeanBilatu(unekoa,zutabea+a);
                 }
             }
 
@@ -327,7 +344,7 @@ public class JokoMatrizea extends Observable {
             if(zut){
                 for(int a=0;a<=2;a++){
                     if(i!= errenkada+a){
-                        if( !(sudoku[i][zutabea+a] instanceof GelaxkaNotEditable) ) erre = erre && balioaErrenkadanBilatu(unekoa,errenkada+a);
+                        if( !(sudoku[errenkada+a][j] instanceof GelaxkaNotEditable) ) erre = erre && balioaErrenkadanBilatu(unekoa,errenkada+a);
                     }
                 }
 
