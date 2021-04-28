@@ -316,21 +316,28 @@ public class JokoMatrizea extends Observable {
     private boolean begiratuAlbokoak(int unekoa, int errenkada, int zutabea,int i,int j) {
         boolean zut=true;
         boolean erre=true;
+        boolean indeter=true;
 
         boolean karratu=balioaMatrizeanBilatu(unekoa,i,j);
 
+        int[] zutIndeterminazio=new int[3];
+        int[] erreIndeterminazio=new int[3];
+
 
         /**
-         * 8 |   | 8
+         * 8 |   |
          * ---------
-         *   | 7 |
-         *   | x |
-         *   | 9 |
+         *   | 7 |   |  8
+         *   | x | 5 |
+         *   | 9 |   |
          *
+         * goiko kasua indeterminazio kasua da eta ezin daiteke balioa determinatu
          *
          * guztiak dauden kasua
          *
          * guztiak egon behar ez direnean GelaxkaNotEditable dagoelako
+         *
+         *
          */
 
         if(!karratu){
@@ -338,6 +345,7 @@ public class JokoMatrizea extends Observable {
             for(int a=0;a<=2;a++){
                 if(j!= zutabea+a){
                     if( !(sudoku[i][zutabea+a] instanceof GelaxkaNotEditable) ) zut= zut && balioaZutabeanBilatu(unekoa,zutabea+a);
+                    else zutIndeterminazio[a]=a;
                 }
             }
 
@@ -347,14 +355,22 @@ public class JokoMatrizea extends Observable {
                 for(int a=0;a<=2;a++){
                     if(i!= errenkada+a){
                         if( !(sudoku[errenkada+a][j] instanceof GelaxkaNotEditable) ) erre = erre && balioaErrenkadanBilatu(unekoa,errenkada+a);
+                        else erreIndeterminazio[a]=a;
                     }
                 }
 
             }
 
+            //indeterminazio kasua konprobatu LoL
+            for(int x=0;x<zutIndeterminazio.length;x++){
+                for (int y=0;y<erreIndeterminazio.length;y++){
+                    if(sudoku[y][x].getBalioa()==0) indeter=false;
+                }
+            }
+
         }
 
-        return (zut && erre && !karratu);
+        return (zut && erre && indeter && !karratu);
 
     }
 
