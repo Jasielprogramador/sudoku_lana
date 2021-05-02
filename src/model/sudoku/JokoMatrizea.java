@@ -33,6 +33,8 @@ public class JokoMatrizea extends Observable {
         return sudoku;
     }
 
+    public int getMaila(){ return maila; }
+
 
     public Gelaxka lortuGelaxka(int errenkada, int zutabea){
         return sudoku[errenkada][zutabea];

@@ -153,18 +153,24 @@ public class LogInGUI extends JFrame implements Observer{
 				else if(txtIzena.getText().equals("")){
 					JOptionPane.showMessageDialog(null, "Mesedez sar ezazu izen bat");
 				}else {
-					Sudoku partidakoSudoku = SudokuLib.getInstance().getSudokuBat(textField.getText());
-					JokoMatrizea.getInstance().setSudoku(partidakoSudoku);
+					Sudoku partidakoSudoku = SudokuLib.getInstance().getSudokuBat(zailtasuna);
 
-					SudokuGUI sud = new SudokuGUI(JokoMatrizea.getInstance().getSudoku());
+					if (partidakoSudoku==null) JOptionPane.showMessageDialog(null, "Zerbait txarto kargatu da, berrabiarazi programa");
+					else{
+						JokoMatrizea.getInstance().setSudoku(partidakoSudoku);
 
-					Timerra.getInstance().timerraHasi();
+						SudokuGUI sud = new SudokuGUI(JokoMatrizea.getInstance().getSudoku());
 
-					Session.getInstantzia().setMaila(Integer.parseInt(textField.getText()));
-					Session.getInstantzia().setIzena(txtIzena.getText());
+						Timerra.getInstance().timerraHasi();
 
-					sud.setVisible(true);
-					setVisible(false);
+						Session.getInstantzia().setMaila(zailtasuna);
+						Session.getInstantzia().setIzena(txtIzena.getText());
+
+						sud.setVisible(true);
+						setVisible(false);
+
+					}
+
 				}
 			} catch (NumberFormatException e) {
 				JOptionPane.showMessageDialog(null, "Zenbaki bat sartu");

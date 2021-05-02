@@ -34,9 +34,17 @@ public class SudokuLib {
         lista.add(sudokua);
     }
 
-    public Sudoku getSudokuBat(String zailtasuna){
+    public Sudoku getSudokuBat(int zailtasuna){
         //mapetik sudoku bat bueltatzen du
-        return matrizeak.get(Integer.parseInt(zailtasuna)).get(0);
+        Sudoku sudo=new Sudoku();
+        try{
+            sudo=matrizeak.get(zailtasuna).get(0);
+        }
+        catch (IndexOutOfBoundsException e){
+            if (zailtasuna==3) sudo=null;
+            else sudo=getSudokuBat(zailtasuna+1); //zaitasun gehiagoko sudoku bat bueltatu (suposatuz zailtasun honetakoa egongo dela)
+        }
+        return sudo;
     }
 
 }

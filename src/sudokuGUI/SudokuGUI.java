@@ -6,12 +6,16 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import model.Session;
 import model.gelaxka.Gelaxka;
 import model.gelaxka.GelaxkaEditable;
 import model.gelaxka.GelaxkaFactory;
+import model.modelutils.Timerra;
 import model.sudoku.Sudoku;
 import model.sudoku.JokoMatrizea;
 import model.modelutils.Enumeratzailea;
+import model.sudoku.SudokuLib;
+import sun.rmi.runtime.Log;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -351,7 +355,7 @@ public class SudokuGUI extends JFrame implements Observer {
 			case BUKATUTA:
 				System.out.println("-------------");
 				System.out.println("bokadillo txorizo mesi: "+ JokoMatrizea.getInstance().puntuazioaKalkulatu()); // basado
-				System.exit(0);
+				//System.exit(0);
 				break;
 		}
 
@@ -386,7 +390,28 @@ public class SudokuGUI extends JFrame implements Observer {
 						//zbk begiratu
 						if (zbkTamaina(zbk,sartuDa)){
 							//konprobatu bukatu duen
-							JokoMatrizea.getInstance().emaitzaEgiaztatu();
+							if(JokoMatrizea.getInstance().emaitzaEgiaztatu()){
+								int zailtasuna=JokoMatrizea.getInstance().getMaila();
+
+								if (zailtasuna==3) System.exit(0);
+
+								Sudoku partidakoSudoku = SudokuLib.getInstance().getSudokuBat(zailtasuna +1 );
+								if (partidakoSudoku==null) System.exit(0);
+								else{
+									JokoMatrizea.getInstance().setSudoku(partidakoSudoku);
+
+									SudokuGUI sud = new SudokuGUI(JokoMatrizea.getInstance().getSudoku());
+
+									Timerra.getInstance().timerraHasi();
+
+									Session.getInstantzia().setMaila(zailtasuna +1 );
+
+									sud.setVisible(true);
+									setVisible(false);
+								}
+
+							}
+
 						}
 
 
