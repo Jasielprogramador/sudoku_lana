@@ -41,6 +41,8 @@ public class JokoMatrizea extends Observable {
     }
 
     public void hasierakoHautagaiakLortu(int i, int j) {
+	//booleanez osatutako array bat erabiliz hautagaiak kalkulatzen du
+	//errenkada, zutabe eta matrize metodoek kalkulatzen laguntzen dituzte
         boolean[] lista = new boolean[9];
 
         hasierakoErrenkadaBegiratu(lista,i);
@@ -57,6 +59,8 @@ public class JokoMatrizea extends Observable {
     }
 
     private void hasierakoErrenkadaBegiratu(boolean[] lista,int errenkada){
+	//metodo languntzailea
+	//lista aldatzen du gelaxkaren balioa != 0 bada
         for(int j = 0;j<9;j++){
             if(sudoku[errenkada][j].getBalioa() != 0){
                 lista[sudoku[errenkada][j].getBalioa() -1] = true;
@@ -65,6 +69,8 @@ public class JokoMatrizea extends Observable {
     }
 
     private void hasierakoZutabeaBegiratu(boolean[] lista,int zutabea){
+	//metodo languntzailea
+	//lista aldatzen du gelaxkaren balioa != 0 bada
         for(int i = 0;i<9;i++){
             if(sudoku[i][zutabea].getBalioa() != 0){
                 lista[sudoku[i][zutabea].getBalioa() -1] = true;
@@ -160,7 +166,8 @@ public class JokoMatrizea extends Observable {
     // konprobazio metodoak
 
     private boolean barrukoMatBegiratu(boolean[] lista, int zutabea,int errenkada) {
-        //
+	//metodo languntzailea
+	//lista aldatzen du gelaxkaren balioa != 0 bada
 
         int errenkadaKarratua=errenkada-(errenkada % 3);
         int zutKarratua=zutabea-(zutabea % 3);
@@ -245,11 +252,14 @@ public class JokoMatrizea extends Observable {
 
 
     private int[] konprobatu(boolean[] lista){
+	//bi zenbaki erabiltzen ditu informazioa emateko
+	//int[0] azken errorea non dagoen markatzen du
+	//int[1] == 1 bada ondo dago
         int kont = 0;
         int[] emaitza = new int[2];
 
-        for(int i =0;i<lista.length;i++){
-            if(lista[i] == true){
+        for(int i = 0;i<lista.length;i++){
+            if(lista[i]){
                 kont ++;
             }
             else{
@@ -388,7 +398,7 @@ public class JokoMatrizea extends Observable {
 
             int b=zutKarratua;
             while(b<zutKarratua+3 && !berdina){
-                berdina= (sudoku[b][a].getBalioa()==balioa);
+                berdina = (sudoku[b][a].getBalioa()==balioa);
                 b++;
             }
             a++;
