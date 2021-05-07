@@ -332,9 +332,6 @@ public class JokoMatrizea extends Observable {
 
         boolean karratu=balioaMatrizeanBilatu(unekoa,i,j);
 
-        int[] zutIndeterminazio=new int[3];
-        int[] erreIndeterminazio=new int[3];
-
         int zutIndeter=0;
         int erreIndeter=0;
 
