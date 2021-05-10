@@ -391,6 +391,8 @@ public class SudokuGUI extends JFrame implements Observer {
 
 						//zbk begiratu
 						if (zbkTamaina(zbk,sartuDa)){
+
+
 							//konprobatu bukatu duen
 							if(JokoMatrizea.getInstance().emaitzaEgiaztatu()){
 								int zailtasuna=JokoMatrizea.getInstance().getMaila();
@@ -413,6 +415,9 @@ public class SudokuGUI extends JFrame implements Observer {
 								}
 
 							}
+							else{
+								JokoMatrizea.getInstance().kargatuHautagaiak();
+							}
 
 						}
 
@@ -426,6 +431,7 @@ public class SudokuGUI extends JFrame implements Observer {
 				}
 
 			}
+			//LAGUNTZA botoia sakatzen baldin badugu
 			else if(btn.equals(btnLaguntza)){
 				textArea.setText("");
 

@@ -1,6 +1,6 @@
 package model.laguntza;
 
-public interface Laguntza {
+public interface Strategy {
 
     int[] soluzioaLortu();
 

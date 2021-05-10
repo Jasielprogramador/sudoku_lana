@@ -45,7 +45,7 @@ public class JokoMatrizea extends Observable {
         return sudoku[errenkada][zutabea];
     }
 
-    public void hasierakoHautagaiakLortu(int i, int j) {
+    private void hasierakoHautagaiakLortu(int i, int j) {
         //booleanez osatutako array bat erabiliz hautagaiak kalkulatzen du
         //errenkada, zutabe eta matrize metodoek kalkulatzen laguntzen dituzte
         boolean[] lista = new boolean[9];
@@ -119,12 +119,17 @@ public class JokoMatrizea extends Observable {
             }
         }
 
+        kargatuHautagaiak();
+    }
+
+    public void kargatuHautagaiak(){
         //hautagaiak kargatu
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 hasierakoHautagaiakLortu(i, j);
             }
         }
+
     }
 
 

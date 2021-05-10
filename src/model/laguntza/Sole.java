@@ -7,7 +7,7 @@ import model.sudoku.JokoMatrizea;
 import java.util.Arrays;
 import java.util.Observable;
 
-public class Sole extends Observable implements Laguntza {
+public class Sole extends Observable implements Strategy {
 
     public int[] soluzioaLortu() {
         return soleCandidate();

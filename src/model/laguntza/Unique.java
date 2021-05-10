@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Observable;
 
-public class Unique extends Observable implements Laguntza {
+public class Unique extends Observable implements Strategy {
 
     public int[] soluzioaLortu() {
         return uniqueCandidate();
@@ -112,8 +112,7 @@ public class Unique extends Observable implements Laguntza {
                             if ((sudoku[errenkada + a][j] instanceof GelaxkaNotEditable)) erreIndeter++;
                             else erre = false;
                         }
-//                        if( !(sudoku[errenkada+a][j] instanceof GelaxkaNotEditable) ) erre = erre && balioaErrenkadanBilatu(unekoa,errenkada+a);
-//                        else erreIndeterminazio[a]=a;
+
                     }
                 }
 
