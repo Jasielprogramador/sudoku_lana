@@ -10,6 +10,8 @@ import model.Session;
 import model.gelaxka.Gelaxka;
 import model.gelaxka.GelaxkaEditable;
 import model.gelaxka.GelaxkaFactory;
+import model.laguntza.Sole;
+import model.laguntza.Unique;
 import model.modelutils.Timerra;
 import model.sudoku.Sudoku;
 import model.sudoku.JokoMatrizea;
@@ -428,10 +430,12 @@ public class SudokuGUI extends JFrame implements Observer {
 				textArea.setText("");
 
 				//Sole candidate
-				//JokoMatrizea.getInstance().soleCandidate();
+				Sole sole = new Sole();
+				sole.soluzioaLortu();
 
 				//Unique candidate
-				JokoMatrizea.getInstance().uniqueCandidate();
+				Unique unique = new Unique();
+				unique.soluzioaLortu();
 
 			}
 		}
