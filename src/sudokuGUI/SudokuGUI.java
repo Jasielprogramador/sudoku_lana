@@ -42,6 +42,8 @@ public class SudokuGUI extends JFrame implements Observer {
 	//panel eskuz sortuak
 	private JPanel sudokuPanel;
 	private JPanel gridBagPane=new JPanel(new GridBagLayout());
+	private JPanel[][] gelaxkaMatrizePanel=new JPanel[9][9];
+
 
 	private JLabel lblHautatutakoBalioa =new JLabel();
 	private JLabel lblHautatutakoHautagaiak=new JLabel();
@@ -91,13 +93,15 @@ public class SudokuGUI extends JFrame implements Observer {
 	}
 
 
-	private void matrizeaSortu(Gelaxka[][] partidakoSudoku) {
+	public void matrizeaSortu(Gelaxka[][] partidakoSudoku) {
 		for(int l=0;l<3;l++) {
 			for(int z=0;z<3;z++) {
 				sudokuPanel.add(getMatrizeKarratuHandiak(l, z, partidakoSudoku));
 			}
 		}
 	}
+
+
 
 
 	private JPanel getMatrizeKarratuHandiak(int lerro,int zutabe,Gelaxka[][] partidakoSudoku) {
@@ -207,6 +211,24 @@ public class SudokuGUI extends JFrame implements Observer {
 		return gridBagLayoutPane;
 	}
 
+
+	private void hautagaiakBirkalkulatu(Gelaxka[][] sudokua){
+		//TODO:hautagaiak birkalkulatu
+		int zutLehena=balioZutabea-(balioZutabea%3);
+		int erreLehena=balioErrenkada-(balioErrenkada%3);
+
+		karratuaKalkulatu(zutLehena,erreLehena,sudokua);
+		//zutabeaKalkulatu(zutLehena,erreLehena,sudokua);
+	}
+
+	private void karratuaKalkulatu(int zutLehena, int erreLehena, Gelaxka[][] sudokua) {
+		for (int x=zutLehena; x<zutLehena+3;x++){
+			for (int y=erreLehena;y<erreLehena+3;y++){
+				JPanel aw= (JPanel) sudokuPanel.getComponent(1);
+
+			}
+		}
+	}
 
 
 	private JPanel getInformazioPanel() {
@@ -417,6 +439,7 @@ public class SudokuGUI extends JFrame implements Observer {
 							}
 							else{
 								JokoMatrizea.getInstance().kargatuHautagaiak();
+								hautagaiakBirkalkulatu(JokoMatrizea.getInstance().getSudoku());
 							}
 
 						}
