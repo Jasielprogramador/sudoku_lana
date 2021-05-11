@@ -1,9 +1,9 @@
 package model.modelutils;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import model.gelaxka.Gelaxka;
 import model.gelaxka.GelaxkaFactory;
@@ -47,12 +47,32 @@ public class Reader {
 		}
 	}
 
+	public ArrayList<String> irakurriRanking() throws FileNotFoundException {
+
+		ArrayList<String> datuak = new ArrayList<>();
+
+		try {
+
+			File fitxategi = new File("ranking.txt");
+			FileReader fr = new FileReader(fitxategi);
+			BufferedReader br = new BufferedReader(fr);
+
+			String unekoLerroa = "";
+
+			while ((unekoLerroa = br.readLine()) != null) {
+				datuak.add(unekoLerroa);
+			}
+			br.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return datuak;
+	}
+
 
 	public static Reader getInstance() {
 		return instance;
 	}
 
-	public Reader() {
-
-	}
+	public Reader() {}
 }

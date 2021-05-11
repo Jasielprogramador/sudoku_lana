@@ -467,21 +467,26 @@ public class SudokuGUI extends JFrame implements Observer {
 							if(JokoMatrizea.getInstance().emaitzaEgiaztatu()){
 								int zailtasuna=JokoMatrizea.getInstance().getMaila();
 
-								if (zailtasuna==3) System.exit(0);
-
-								Sudoku partidakoSudoku = SudokuLib.getInstance().getSudokuBat(zailtasuna +1 );
-								if (partidakoSudoku==null) System.exit(0);
-								else{
-									JokoMatrizea.getInstance().setSudoku(partidakoSudoku);
-
-									SudokuGUI sud = new SudokuGUI(JokoMatrizea.getInstance().getSudoku());
-
-									Timerra.getInstance().timerraHasi();
-
-									Session.getInstantzia().setMaila(zailtasuna +1 );
-
-									sud.setVisible(true);
+								if (zailtasuna==3){
+									RankingGUI rankingGUI = new RankingGUI();
 									setVisible(false);
+								}
+
+								else{
+									Sudoku partidakoSudoku = SudokuLib.getInstance().getSudokuBat(zailtasuna +1 );
+									if (partidakoSudoku==null) System.exit(0);
+									else{
+										JokoMatrizea.getInstance().setSudoku(partidakoSudoku);
+
+										SudokuGUI sud = new SudokuGUI(JokoMatrizea.getInstance().getSudoku());
+
+										Timerra.getInstance().timerraHasi();
+
+										Session.getInstantzia().setMaila(zailtasuna +1 );
+
+										sud.setVisible(true);
+										setVisible(false);
+									}
 								}
 
 							}
