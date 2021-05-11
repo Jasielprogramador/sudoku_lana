@@ -212,22 +212,70 @@ public class SudokuGUI extends JFrame implements Observer {
 	}
 
 
-	private void hautagaiakBirkalkulatu(Gelaxka[][] sudokua){
+	private void hautagaiakBirkalkulatu(Gelaxka[][] sudokua,int zbk){
 		//TODO:hautagaiak birkalkulatu
-		int zutLehena=balioZutabea-(balioZutabea%3);
-		int erreLehena=balioErrenkada-(balioErrenkada%3);
+		int zutLehena=balioZutabea%3;
+		int erreLehena=balioErrenkada%3;
 
-		karratuaKalkulatu(zutLehena,erreLehena,sudokua);
-		//zutabeaKalkulatu(zutLehena,erreLehena,sudokua);
+
+
+		karratuaKalkulatu(zutLehena,erreLehena,zbk);
+		zutabeaKalkulatu(zutLehena,zbk);
+		errenkadaKalkulatu(erreLehena,zbk);
 	}
 
-	private void karratuaKalkulatu(int zutLehena, int erreLehena, Gelaxka[][] sudokua) {
-		for (int x=zutLehena; x<zutLehena+3;x++){
-			for (int y=erreLehena;y<erreLehena+3;y++){
-				JPanel aw= (JPanel) sudokuPanel.getComponent(1);
+	private void zutabeaKalkulatu(int zutLehena, int zbk) {
 
+		for (int x=zutLehena;x<zutLehena+3;x=x+3){
+			JPanel handia= (JPanel)sudokuPanel.getComponent(x);
+			JPanel karratutxo= (JPanel) handia.getComponent(0);
+
+			for (int y=zutLehena;y<zutLehena+3;y=y+3){
+				JPanel gelaxka= (JPanel) karratutxo.getComponent(y);
+
+				//hautagaiak eguneratu
+				JLabel jl=((JLabel)gelaxka.getComponent(0));
+				jl.setText(jl.getText().replace(String.valueOf(zbk),""));
 			}
+
 		}
+
+
+	}
+
+	private void errenkadaKalkulatu(int lehena, int zbk) {
+
+		int balioa=lehena*3;
+
+
+		for (int x=balioa;x<balioa+3;x++){
+			JPanel handia= (JPanel)sudokuPanel.getComponent(x);
+			JPanel karratutxo= (JPanel) handia.getComponent(0);
+
+			for (int y=lehena*3;y<lehena*3+3;y++){
+				JPanel gelaxka= (JPanel) karratutxo.getComponent(y);
+
+				//hautagaiak eguneratu
+				JLabel jl=((JLabel)gelaxka.getComponent(0));
+				jl.setText(jl.getText().replace(String.valueOf(zbk),""));
+			}
+
+		}
+
+	}
+
+	private void karratuaKalkulatu(int zutLehena, int erreLehena, int zbk) {
+		//((JPanel)((JPanel)((JPanel)sudokuPanel.getComponent(zutLehena*3+erreLehena)).getComponent(0)).getComponent(3)).getComponent(0)
+		JPanel handia= (JPanel) sudokuPanel.getComponent(zutLehena*3+erreLehena);
+		JPanel karratutxo= (JPanel) handia.getComponent(0); //3x3 matrizea
+
+		for (int x=0;x<9;x++){
+			JPanel gelaxka= (JPanel) karratutxo.getComponent(x);
+
+			JLabel jl=((JLabel)gelaxka.getComponent(0));
+			jl.setText(jl.getText().replace(String.valueOf(zbk),""));
+		}
+
 	}
 
 
@@ -439,7 +487,7 @@ public class SudokuGUI extends JFrame implements Observer {
 							}
 							else{
 								JokoMatrizea.getInstance().kargatuHautagaiak();
-								hautagaiakBirkalkulatu(JokoMatrizea.getInstance().getSudoku());
+								hautagaiakBirkalkulatu(JokoMatrizea.getInstance().getSudoku(),zbk);
 							}
 
 						}
