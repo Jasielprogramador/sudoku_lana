@@ -11,6 +11,7 @@ import model.gelaxka.Gelaxka;
 import model.gelaxka.GelaxkaEditable;
 import model.gelaxka.GelaxkaFactory;
 import model.laguntza.Sole;
+import model.laguntza.Strategy;
 import model.laguntza.Unique;
 import model.modelutils.Timerra;
 import model.sudoku.Sudoku;

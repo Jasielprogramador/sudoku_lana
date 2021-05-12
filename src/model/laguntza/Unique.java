@@ -27,7 +27,7 @@ public class Unique extends Observable implements Strategy {
             int j = 0;
             while (j < 9 && !aurkitua) {
                 if (sudoku[i][j].getBalioa() == 0) {
-                    GelaxkaEditable gE = (GelaxkaEditable) sudoku[6][7];
+                    GelaxkaEditable gE = (GelaxkaEditable) sudoku[i][j];
                     ArrayList<Integer> lista = gE.getHautagaiak();
 
                     int unekoa = 0;
