@@ -23,6 +23,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.FileNotFoundException;
 import java.util.*;
 import java.util.List;
 
@@ -498,7 +499,7 @@ public class SudokuGUI extends JFrame implements Observer {
 						}
 
 
-					} catch (NumberFormatException e) {
+					} catch (NumberFormatException | FileNotFoundException e) {
 						JOptionPane.showMessageDialog(null, "Zenbaki bat sartu mesedez");
 					}
 

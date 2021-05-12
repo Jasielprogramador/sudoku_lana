@@ -11,8 +11,6 @@ import java.io.FileNotFoundException;
 public class Main {
 	public static void main(String[] args) throws FileNotFoundException {
 
-		Reader.getInstance().irakurriRanking();
-
 		//BISTA
 		LogInGUI log=new LogInGUI();
 

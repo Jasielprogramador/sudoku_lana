@@ -167,12 +167,12 @@ public class JokoMatrizea extends Observable {
     }
 
 
-    public String puntuazioaKalkulatu() {
+    public double puntuazioaKalkulatu() {
         double puntuazioa;
         double denbora = (Timerra.getInstance().igarotakoDenbora()) / 1000; //segundutan
         puntuazioa = (3000 * maila) / (denbora + (30 * laguntzaKop));
 
-        return String.format("%.2f", puntuazioa);
+        return puntuazioa;
     }
 
 }

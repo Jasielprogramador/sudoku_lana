@@ -1,11 +1,15 @@
 package sudokuGUI;
 
+import model.Session;
 import model.modelutils.Reader;
+import model.sudoku.JokoMatrizea;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -13,24 +17,22 @@ public class RankingGUI extends JFrame {
 
     private JPanel contentPane;
 
-    private String[][] lortuRanking() throws FileNotFoundException {
-        ArrayList<String> lista = Reader.getInstance().irakurriRanking();
-
-        String data[][] = new String[50][50];
-
-        for(int i = 0; i<lista.size();i++){
-            String[] berria = lista.get(i).split("-");
-            data[0][i] = berria[0]+berria[1];
-        }
-        return data;
-    }
-
     public RankingGUI() throws FileNotFoundException {
+
+        puntuazioaIdatzi();
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 450, 300);
 
-        String data[][]=lortuRanking();
+        ArrayList<String> lista = Reader.getInstance().irakurriRanking();
+
+        String[][] data = new String[50][50];
+
+        for(int i = 0; i<lista.size();i++){
+            String[] berria = lista.get(i).split("-");
+            data[i] = berria;
+        }
+
         String column[]={"Izena","Puntuazioa"};
 
         contentPane = new JPanel();
@@ -47,4 +49,21 @@ public class RankingGUI extends JFrame {
         setVisible(true);
 
     }
+
+    public void puntuazioaIdatzi(){
+        double puntuazioa = JokoMatrizea.getInstance().puntuazioaKalkulatu();
+        String izena = Session.getInstantzia().getIzena();
+
+        try {
+            FileWriter myWriter = new FileWriter("ranking.txt",true);
+            myWriter.write(izena+"-"+puntuazioa);
+            myWriter.write("\n");//appends the string to the file
+            myWriter.close();
+            System.out.println("Successfully wrote to the file.");
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+    }
 }
+
