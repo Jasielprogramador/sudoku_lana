@@ -28,6 +28,7 @@ public class RankingGUI extends JFrame {
 
         String[][] data = new String[50][50];
 
+
         for(int i = 0; i<lista.size();i++){
             String[] berria = lista.get(i).split("-");
             data[i] = berria;
