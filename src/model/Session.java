@@ -23,6 +23,10 @@ public class Session {
     public void setMaila(int maila) {
         this.maila = maila;
     }
+    
+    public int getMaila() {
+    	return maila;
+    }
 
     public String getIzena(){
         return izena;
