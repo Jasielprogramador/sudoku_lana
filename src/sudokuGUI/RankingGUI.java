@@ -11,11 +11,13 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.stream.Stream;
 
 
 public class RankingGUI extends JFrame {
 
     private JPanel contentPane;
+    private ArrayList<String> lista = Reader.getInstance().irakurriRanking();
 
     public RankingGUI() throws FileNotFoundException {
 
@@ -24,22 +26,19 @@ public class RankingGUI extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 450, 300);
 
-        ArrayList<String> lista = Reader.getInstance().irakurriRanking();
-
         String[][] data = new String[50][50];
-
-
+        
         for(int i = 0; i<lista.size();i++){
             String[] berria = lista.get(i).split("-");
             data[i] = berria;
         }
 
-        String column[]={"Izena","Puntuazioa"};
+        String column[]={"Maila","Puntuazioa","Izena"};
 
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
-        contentPane.setLayout(new GridLayout(4, 1, 0, 0));
+        contentPane.setLayout(new GridLayout(6, 3, 0, 0));
 
         JTable jt=new JTable(data,column);
         jt.setBounds(30,40,200,300);
@@ -50,21 +49,26 @@ public class RankingGUI extends JFrame {
         setVisible(true);
 
     }
+    
+    private void puntuazioaGehitu(int maila, double puntuazioa, String izena) {
+    	lista.add(new String(maila+"-"+puntuazioa+"-"+izena));
+    }
+    
+    private void puntuazioaOrdenatu() {
+    	lista.sort((e1, e2) -> e2.compareTo(e1));
+    }
 
     public void puntuazioaIdatzi(){
         double puntuazioa = JokoMatrizea.getInstance().puntuazioaKalkulatu();
         String izena = Session.getInstantzia().getIzena();
-
-        try {
-            FileWriter myWriter = new FileWriter("ranking.txt",true);
-            myWriter.write(izena+"-"+puntuazioa);
-            myWriter.write("\n");//appends the string to the file
-            myWriter.close();
-            System.out.println("Successfully wrote to the file.");
-        } catch (IOException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        }
+        int maila = Session.getInstantzia().getMaila();
+        
+        puntuazioaGehitu(maila, puntuazioa, izena);
+        
+        puntuazioaOrdenatu();
+        System.out.println(lista);
+        
+        Reader.getInstance().idatzi(lista);
     }
 }
 
