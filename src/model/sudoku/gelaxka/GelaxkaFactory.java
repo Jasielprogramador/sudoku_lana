@@ -1,4 +1,4 @@
-package model.gelaxka;
+package model.sudoku.gelaxka;
 
 public class GelaxkaFactory {
 

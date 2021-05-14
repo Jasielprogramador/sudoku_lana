@@ -6,19 +6,17 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-import model.Session;
-import model.gelaxka.Gelaxka;
-import model.gelaxka.GelaxkaEditable;
-import model.gelaxka.GelaxkaFactory;
+import model.ranking.Erabiltzaile;
+import model.ranking.Session;
+import model.sudoku.gelaxka.Gelaxka;
+import model.sudoku.gelaxka.GelaxkaEditable;
 import model.laguntza.Sole;
-import model.laguntza.Strategy;
 import model.laguntza.Unique;
 import model.modelutils.Timerra;
 import model.sudoku.Sudoku;
 import model.sudoku.JokoMatrizea;
 import model.modelutils.Enumeratzailea;
 import model.sudoku.SudokuLib;
-import sun.rmi.runtime.Log;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -469,8 +467,10 @@ public class SudokuGUI extends JFrame implements Observer {
 							if(JokoMatrizea.getInstance().emaitzaEgiaztatu()){
 								int zailtasuna=JokoMatrizea.getInstance().getMaila();
 
+								Session.getInstantzia().idatziUnekoa();
+
 								if (zailtasuna==3){
-									RankingGUI rankingGUI = new RankingGUI();
+									RankingGUI rankingGUI = new RankingGUI(Session.getInstantzia().ordenatu());
 									setVisible(false);
 								}
 
@@ -484,7 +484,11 @@ public class SudokuGUI extends JFrame implements Observer {
 
 										Timerra.getInstance().timerraHasi();
 
-										Session.getInstantzia().setMaila(zailtasuna +1 );
+										Erabiltzaile erab=new Erabiltzaile();
+										erab.setIzena(Session.getInstantzia().getIzena(0));
+										erab.setMaila(Session.getInstantzia().getMaila(0)+1);
+
+										Session.getInstantzia().sartuUnekoa(erab);
 
 										sud.setVisible(true);
 										setVisible(false);

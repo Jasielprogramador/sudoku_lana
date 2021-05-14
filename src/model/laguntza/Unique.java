@@ -1,8 +1,8 @@
 package model.laguntza;
 
-import model.gelaxka.Gelaxka;
-import model.gelaxka.GelaxkaEditable;
-import model.gelaxka.GelaxkaNotEditable;
+import model.sudoku.gelaxka.Gelaxka;
+import model.sudoku.gelaxka.GelaxkaEditable;
+import model.sudoku.gelaxka.GelaxkaNotEditable;
 import model.modelutils.Enumeratzailea;
 import model.sudoku.JokoMatrizea;
 

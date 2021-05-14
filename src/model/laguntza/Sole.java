@@ -1,6 +1,6 @@
 package model.laguntza;
 
-import model.gelaxka.Gelaxka;
+import model.sudoku.gelaxka.Gelaxka;
 import model.modelutils.Enumeratzailea;
 import model.sudoku.JokoMatrizea;
 

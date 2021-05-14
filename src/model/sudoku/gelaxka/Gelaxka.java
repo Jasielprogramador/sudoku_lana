@@ -1,7 +1,5 @@
-package model.gelaxka;
+package model.sudoku.gelaxka;
 
-
-import java.util.ArrayList;
 
 public class Gelaxka {
 	protected int balioa;

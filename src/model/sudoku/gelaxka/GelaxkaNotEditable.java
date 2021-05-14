@@ -1,6 +1,4 @@
-package model.gelaxka;
-
-import model.gelaxka.Gelaxka;
+package model.sudoku.gelaxka;
 
 public class GelaxkaNotEditable extends Gelaxka {
 

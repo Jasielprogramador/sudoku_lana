@@ -1,8 +1,6 @@
 package nagusia;
 
-import model.Session;
-import model.modelutils.Reader;
-import model.sudoku.Sudoku;
+import model.ranking.Session;
 import model.sudoku.SudokuLib;
 import sudokuGUI.LogInGUI;
 

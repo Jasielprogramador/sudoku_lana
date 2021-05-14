@@ -1,9 +1,5 @@
 package model.sudoku;
 
-import model.gelaxka.Gelaxka;
-
-import java.util.*;
-
 public class Sudoku {
 
 	private int[][] emaitza = new int[9][9];

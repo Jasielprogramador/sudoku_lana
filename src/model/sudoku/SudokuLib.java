@@ -1,12 +1,9 @@
 package model.sudoku;
 
-import model.gelaxka.Gelaxka;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class SudokuLib {
     private static SudokuLib instantzia=new SudokuLib();

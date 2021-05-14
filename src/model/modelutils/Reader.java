@@ -1,26 +1,23 @@
 package model.modelutils;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+import java.util.List;
 import java.util.stream.Stream;
 
-import model.gelaxka.Gelaxka;
-import model.gelaxka.GelaxkaFactory;
-import model.sudoku.Sudoku;
+import model.ranking.Erabiltzaile;
 import model.sudoku.SudokuLib;
+
+import static java.util.stream.Collectors.toList;
 
 
 public class Reader {
 
 	private static Reader instance=new Reader();
-	private String rankingFitx = "ranking.txt";
 
 	public void irakurri() {
 		// sudoku.txt fitxategia irakurri,
@@ -54,15 +51,25 @@ public class Reader {
 		}
 	}
 
-	public ArrayList<String> irakurriRanking() {
+	public List<Erabiltzaile> irakurriRanking() {
 		Path fitx = Paths.get("ranking.txt");
 		Stream<String> lines;
-		ArrayList<String> datuak;
+		List<Erabiltzaile> datuak=new ArrayList<>();
 		try {
 			lines = Files.lines(fitx)
 					.onClose(() -> System.out.println("'ranking.txt' ondo irakurri da"));
-			datuak = (ArrayList<String>) lines.collect(Collectors.toList());
-			return datuak;
+
+			datuak = lines.map(p -> {
+				//getMaila(0)+"-"+getPuntuazioa(0)+"-"+getIzena(0)
+				String[] unekoa = p.split("-");
+				Erabiltzaile erab = new Erabiltzaile();
+				erab.setPuntuazioa(Double.parseDouble(unekoa[1]));
+				erab.setMaila(Integer.parseInt(unekoa[0]));
+				erab.setIzena(unekoa[2]);
+				return erab;
+			})
+			.collect(toList());
+
 		} catch (IOException e) {
 			System.out.println("Fitxategia ez da existitzen, berria sortuko da");
 			try {
@@ -71,18 +78,24 @@ public class Reader {
 				i.printStackTrace();
 			}
 		}
-		return new ArrayList<String>();
+		return datuak;
 	}
 	
 	private void rankingBerriaSortu() throws IOException {
-		File fitx = new File(rankingFitx);
+		File fitx = new File("ranking.txt");
 		fitx.createNewFile();
+		irakurriRanking();
 	}
 
-	public void idatzi(ArrayList<String> lista) {
+	public void idatziRanking(String testua) {
 		try {
-			Files.write(Paths.get(rankingFitx), lista, false);
-			     //(Iterable<String>)StringStream.range(0, 5000).mapToObj(String::valueOf)::iterator);
+			//FIXME: true parametroak new line moduan funtzionatu beharko luke, baina ez du ezer egiten
+
+			BufferedWriter bw = new BufferedWriter(new FileWriter("ranking.txt",true));
+			bw.newLine();
+			bw.write(testua);
+			bw.close();
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -1,7 +1,5 @@
-package model.gelaxka;
+package model.sudoku.gelaxka;
 
-
-import model.gelaxka.Gelaxka;
 
 import java.util.ArrayList;
 

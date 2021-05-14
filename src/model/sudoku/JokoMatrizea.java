@@ -1,13 +1,12 @@
 package model.sudoku;
 
-import model.gelaxka.Gelaxka;
-import model.gelaxka.GelaxkaEditable;
-import model.gelaxka.GelaxkaFactory;
-import model.gelaxka.GelaxkaNotEditable;
+import model.ranking.Session;
+import model.sudoku.gelaxka.Gelaxka;
+import model.sudoku.gelaxka.GelaxkaEditable;
+import model.sudoku.gelaxka.GelaxkaFactory;
 import model.laguntza.Sole;
 import model.modelutils.Enumeratzailea;
 import model.modelutils.Timerra;
-import sun.java2d.x11.XSurfaceData;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -168,9 +167,14 @@ public class JokoMatrizea extends Observable {
 
 
     public double puntuazioaKalkulatu() {
+
+        double milis=Timerra.getInstance().igarotakoDenbora();
+
         double puntuazioa;
-        double denbora = (Timerra.getInstance().igarotakoDenbora()) / 1000; //segundutan
+        double denbora = milis / 1000; //segundutan
         puntuazioa = (3000 * maila) / (denbora + (30 * laguntzaKop));
+
+        Session.getInstantzia().setPuntuazioa(puntuazioa);
 
         return puntuazioa;
     }

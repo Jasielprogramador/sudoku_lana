@@ -4,8 +4,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import model.gelaxka.Gelaxka;
-import model.Session;
+import model.ranking.Erabiltzaile;
+import model.ranking.Session;
 import model.sudoku.JokoMatrizea;
 import model.sudoku.Sudoku;
 import model.modelutils.Timerra;
@@ -163,8 +163,13 @@ public class LogInGUI extends JFrame implements Observer{
 
 						Timerra.getInstance().timerraHasi();
 
-						Session.getInstantzia().setMaila(zailtasuna);
-						Session.getInstantzia().setIzena(txtIzena.getText());
+						Session.getInstantzia().setErabIzena(txtIzena.getText());
+
+						Erabiltzaile erab=new Erabiltzaile();
+						erab.setIzena(txtIzena.getText());
+						erab.setMaila(zailtasuna);
+
+						Session.getInstantzia().sartuUnekoa(erab);
 
 						sud.setVisible(true);
 						setVisible(false);
