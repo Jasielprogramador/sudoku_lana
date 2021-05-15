@@ -9,6 +9,10 @@ import java.util.Observable;
 
 public class Sole extends Observable implements Strategy {
 
+    public Sole(){
+
+    }
+
     public int[] soluzioaLortu() {
         return soleCandidate();
     }

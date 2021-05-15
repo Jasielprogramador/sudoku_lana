@@ -12,6 +12,10 @@ import java.util.Observable;
 
 public class Unique extends Observable implements Strategy {
 
+    public Unique(){
+
+    }
+
     public int[] soluzioaLortu() {
         return uniqueCandidate();
     }

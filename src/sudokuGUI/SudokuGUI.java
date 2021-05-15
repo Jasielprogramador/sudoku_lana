@@ -37,6 +37,8 @@ public class SudokuGUI extends JFrame implements Observer {
 
 	//kontrolatzailea
 	private Controller controller;
+	private Observable uniqueObs;
+	private Observable soleObs;
 
 
 	//panel eskuz sortuak
@@ -66,8 +68,15 @@ public class SudokuGUI extends JFrame implements Observer {
 	/**
 	 * Create the frame.
 	 */
-	public SudokuGUI(Gelaxka[][] partidakoSudoku) {
+	public SudokuGUI(Gelaxka[][] partidakoSudoku, Observable pUnique, Observable pSole) {
+		//observerak
 		JokoMatrizea.getInstance().addObserver(this);
+
+		uniqueObs=pUnique;
+		uniqueObs.addObserver(this);
+
+		soleObs=pSole;
+		soleObs.addObserver(this);
 
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -216,20 +225,30 @@ public class SudokuGUI extends JFrame implements Observer {
 		int zutLehena=balioZutabea%3;
 		int erreLehena=balioErrenkada%3;
 
+		int zbkGel=erreLehena+zutLehena;
 
 
-		karratuaKalkulatu(zutLehena,erreLehena,zbk);
-		zutabeaKalkulatu(zutLehena,zbk);
-		errenkadaKalkulatu(erreLehena,zbk);
+
+		karratuaKalkulatu(zbk);
+		zutabeaKalkulatu(zbkGel,zbk);
+		errenkadaKalkulatu(zbk);
 	}
 
-	private void zutabeaKalkulatu(int zutLehena, int zbk) {
+	private void zutabeaKalkulatu(int zbkGel, int zbk) {
 
-		for (int x=zutLehena;x<zutLehena+3;x=x+3){
+		int azpiMat=(balioZutabea/3)*3 + (balioErrenkada/3);
+		int lehenAzpiMat=azpiMat%3;
+
+		int zutabekoLehena=balioErrenkada%3;
+
+
+
+
+		for (int x=lehenAzpiMat;x<=lehenAzpiMat+6;x=x+3){
 			JPanel handia= (JPanel)sudokuPanel.getComponent(x);
 			JPanel karratutxo= (JPanel) handia.getComponent(0);
 
-			for (int y=zutLehena;y<zutLehena+3;y=y+3){
+			for (int y=zutabekoLehena;y<=zutabekoLehena+6;y=y+3){
 				JPanel gelaxka= (JPanel) karratutxo.getComponent(y);
 
 				//hautagaiak eguneratu
@@ -242,16 +261,18 @@ public class SudokuGUI extends JFrame implements Observer {
 
 	}
 
-	private void errenkadaKalkulatu(int lehena, int zbk) {
+	private void errenkadaKalkulatu(int zbk) {
 
-		int balioa=lehena*3;
+		int balioLehena=(balioZutabea/3)*3;
+
+		int errenkadakoLehena=balioZutabea%3*3;
 
 
-		for (int x=balioa;x<balioa+3;x++){
+		for (int x=balioLehena;x<balioLehena+3;x++){
 			JPanel handia= (JPanel)sudokuPanel.getComponent(x);
 			JPanel karratutxo= (JPanel) handia.getComponent(0);
 
-			for (int y=lehena*3;y<lehena*3+3;y++){
+			for (int y=errenkadakoLehena;y<errenkadakoLehena+3;y++){
 				JPanel gelaxka= (JPanel) karratutxo.getComponent(y);
 
 				//hautagaiak eguneratu
@@ -263,9 +284,11 @@ public class SudokuGUI extends JFrame implements Observer {
 
 	}
 
-	private void karratuaKalkulatu(int zutLehena, int erreLehena, int zbk) {
+	private void karratuaKalkulatu(int zbk) {
 		//((JPanel)((JPanel)((JPanel)sudokuPanel.getComponent(zutLehena*3+erreLehena)).getComponent(0)).getComponent(3)).getComponent(0)
-		JPanel handia= (JPanel) sudokuPanel.getComponent(zutLehena*3+erreLehena);
+		int azpiMat=(balioZutabea/3)*3 + (balioErrenkada/3);
+
+		JPanel handia= (JPanel) sudokuPanel.getComponent(azpiMat);
 		JPanel karratutxo= (JPanel) handia.getComponent(0); //3x3 matrizea
 
 		for (int x=0;x<9;x++){
@@ -400,6 +423,7 @@ public class SudokuGUI extends JFrame implements Observer {
 		return controller;
 	}
 
+
 	@Override
 	public void update(Observable o, Object arg) {
 
@@ -426,12 +450,12 @@ public class SudokuGUI extends JFrame implements Observer {
 			case BUKATUTA:
 				System.out.println("-------------");
 				System.out.println("bokadillo txorizo mesi: "+ JokoMatrizea.getInstance().puntuazioaKalkulatu()); // basado
-				//System.exit(0);
 				break;
 		}
 
 
 	}
+
 
 
 	private class Controller implements ActionListener {
@@ -479,7 +503,7 @@ public class SudokuGUI extends JFrame implements Observer {
 									else{
 										JokoMatrizea.getInstance().setSudoku(partidakoSudoku);
 
-										SudokuGUI sud = new SudokuGUI(JokoMatrizea.getInstance().getSudoku());
+										SudokuGUI sud = new SudokuGUI(JokoMatrizea.getInstance().getSudoku(),uniqueObs,soleObs);
 
 										Timerra.getInstance().timerraHasi();
 
@@ -514,15 +538,13 @@ public class SudokuGUI extends JFrame implements Observer {
 			}
 			//LAGUNTZA botoia sakatzen baldin badugu
 			else if(btn.equals(btnLaguntza)){
-				textArea.setText("");
+				textArea.append("\n");
 
 				//Sole candidate
-				Sole sole = new Sole();
-				sole.soluzioaLortu();
+				((Sole)soleObs).soluzioaLortu();
 
 				//Unique candidate
-				Unique unique = new Unique();
-				unique.soluzioaLortu();
+				((Unique)uniqueObs).soluzioaLortu();
 
 			}
 		}
@@ -530,7 +552,6 @@ public class SudokuGUI extends JFrame implements Observer {
 		private boolean zbkTamaina(int zbk,boolean sartuDa) {
 			boolean em=false;
 			if (zbk >= 1 && zbk <= 9) {
-				textArea.setText("");
 				lblHautatutakoBalioa.setText(txtFieldBalioa.getText());
 				lblHautatutakoHautagaiak.setText(txtFieldHautagai.getText());
 

@@ -4,6 +4,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import model.laguntza.Sole;
+import model.laguntza.Unique;
 import model.ranking.Erabiltzaile;
 import model.ranking.Session;
 import model.sudoku.JokoMatrizea;
@@ -159,7 +161,11 @@ public class LogInGUI extends JFrame implements Observer{
 					else{
 						JokoMatrizea.getInstance().setSudoku(partidakoSudoku);
 
-						SudokuGUI sud = new SudokuGUI(JokoMatrizea.getInstance().getSudoku());
+						//Observer aren movida
+						Unique unique=new Unique();
+						Sole sole=new Sole();
+
+						SudokuGUI sud = new SudokuGUI(JokoMatrizea.getInstance().getSudoku(),unique,sole);
 
 						Timerra.getInstance().timerraHasi();
 
