@@ -29,7 +29,7 @@ import java.util.List;
 public class SudokuGUI extends JFrame implements Observer {
 
 	//Panel generikoak
-	private JPanel contentPane;
+	private final JPanel contentPane;
 	private JPanel informazioPanel;
 	private JPanel datuakPanel;
 	private JPanel hautagaiPanel;
@@ -42,7 +42,6 @@ public class SudokuGUI extends JFrame implements Observer {
 	//panel eskuz sortuak
 	private JPanel sudokuPanel;
 	private JPanel gridBagPane=new JPanel(new GridBagLayout());
-	private JPanel[][] gelaxkaMatrizePanel=new JPanel[9][9];
 
 
 	private JLabel lblHautatutakoBalioa =new JLabel();
@@ -152,14 +151,14 @@ public class SudokuGUI extends JFrame implements Observer {
 		JLabel lblHautagaiak=new JLabel();
 		lblHautagaiak.setHorizontalAlignment(SwingConstants.CENTER);
 		lblHautagaiak.setVerticalAlignment(SwingConstants.CENTER);
-		lblHautagaiak.setFont(new Font("Verdana",1,9));
+		lblHautagaiak.setFont(new Font("Verdana", Font.BOLD,9));
 
 
 		//JLabel balioa
 		JLabel lblBalioa=new JLabel();
 		lblBalioa.setHorizontalAlignment(SwingConstants.CENTER);
 		lblBalioa.setVerticalAlignment(SwingConstants.CENTER);
-		lblBalioa.setFont(new Font("Verdana",1,15));
+		lblBalioa.setFont(new Font("Verdana", Font.BOLD,15));
 
 
 		int zenbakia=partidakoSudoku[zut][errenkada].getBalioa();
@@ -212,7 +211,7 @@ public class SudokuGUI extends JFrame implements Observer {
 	}
 
 
-	private void hautagaiakBirkalkulatu(Gelaxka[][] sudokua,int zbk){
+	private void hautagaiakBirkalkulatu(int zbk){
 		//TODO:hautagaiak birkalkulatu
 		int zutLehena=balioZutabea%3;
 		int erreLehena=balioErrenkada%3;
@@ -470,7 +469,7 @@ public class SudokuGUI extends JFrame implements Observer {
 								Session.getInstantzia().idatziUnekoa();
 
 								if (zailtasuna==3){
-									RankingGUI rankingGUI = new RankingGUI(Session.getInstantzia().ordenatu());
+									new RankingGUI(Session.getInstantzia().ordenatu());
 									setVisible(false);
 								}
 
@@ -498,7 +497,7 @@ public class SudokuGUI extends JFrame implements Observer {
 							}
 							else{
 								JokoMatrizea.getInstance().kargatuHautagaiak();
-								hautagaiakBirkalkulatu(JokoMatrizea.getInstance().getSudoku(),zbk);
+								hautagaiakBirkalkulatu(zbk);
 							}
 
 						}
@@ -561,13 +560,13 @@ public class SudokuGUI extends JFrame implements Observer {
 
 			g.setHautagaiak(listaInt);
 
-			String a = "";
+			StringBuilder a = new StringBuilder();
 
-			for(int i = 0;i<listaInt.size();i++){
-				a = a+listaInt.get(i)+" ";
+			for (Integer integer : listaInt) {
+				a.append(integer).append(" ");
 			}
 
-			lblHautatutakoHautagaiak.setText(a);
+			lblHautatutakoHautagaiak.setText(a.toString());
 		}
 
 

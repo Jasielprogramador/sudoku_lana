@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SudokuLib {
-    private static SudokuLib instantzia=new SudokuLib();
+    private static final SudokuLib instantzia=new SudokuLib();
 
     //private static List<Sudoku> sudokuak=new ArrayList<>();
 
@@ -35,7 +35,8 @@ public class SudokuLib {
 
     public Sudoku getSudokuBat(int zailtasuna){
         //mapetik sudoku bat bueltatzen du
-        Sudoku sudo=new Sudoku();
+        new Sudoku();
+        Sudoku sudo;
         try{
             sudo=matrizeak.get(zailtasuna).get(0);
         }
@@ -50,7 +51,7 @@ public class SudokuLib {
         //sudokuaren datuak hartu
         int errenkada=0;
 
-        String unekoLerroa="";
+        String unekoLerroa;
 
         Sudoku sudoku=new Sudoku();
 
@@ -61,8 +62,8 @@ public class SudokuLib {
             System.out.println(lista);
 
             //erabiltzaile matrizea idatzi
+            int zut=0;
             if(errenkada<9) {
-                int zut=0;
 
                 for(char i: lista) {
                     int intLag=Character.getNumericValue(i);
@@ -71,20 +72,18 @@ public class SudokuLib {
                     sudoku.setSudokuHutsaBalioa(zut,errenkada,intLag);
                     zut++;
                 }
-                errenkada++;
             }
 
             //balio ona idatzi
             else {
-                int zut=0;
 
                 for(char i: lista) {
                     int intLag=Character.getNumericValue(i);
                     sudoku.setEmaitzaBalioa(zut,errenkada-9,intLag);
                     zut++;
                 }
-                errenkada++;
             }
+            errenkada++;
         }
 
 

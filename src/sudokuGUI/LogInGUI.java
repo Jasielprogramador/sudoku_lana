@@ -24,7 +24,7 @@ import javax.swing.JTextField;
 
 public class LogInGUI extends JFrame implements Observer{
 
-	private JPanel contentPane;
+	private final JPanel contentPane;
 	private JPanel izenaPane;
 	private JLabel lblIzena;
 	private JTextField txtIzena;

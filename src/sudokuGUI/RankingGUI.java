@@ -1,12 +1,8 @@
 package sudokuGUI;
 
 import model.ranking.Erabiltzaile;
-import model.ranking.Session;
-import model.modelutils.Reader;
-import model.sudoku.JokoMatrizea;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -14,7 +10,7 @@ import java.util.List;
 
 public class RankingGUI extends JFrame {
 
-    private JPanel contentPane;
+    private final JPanel contentPane;
 
     public RankingGUI(List<Erabiltzaile> ordenatuta) throws FileNotFoundException {
 
@@ -37,7 +33,7 @@ public class RankingGUI extends JFrame {
         }
 
 
-        String column[]={"Maila","Puntuazioa","Izena"};
+        String[] column ={"Maila","Puntuazioa","Izena"};
 
         contentPane = new JPanel();
         setContentPane(contentPane);

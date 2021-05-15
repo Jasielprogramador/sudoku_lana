@@ -117,11 +117,9 @@ public class Sole extends Observable implements Strategy {
             }
         }
 
-        if (kont == lista.length - 1) {
-            emaitza[1] = 1;
-        } else {
-            emaitza[1] = 0;
-        }
+        if (kont == lista.length - 1) emaitza[1] = 1;
+        else emaitza[1] = 0;
+
         return emaitza;
     }
 }

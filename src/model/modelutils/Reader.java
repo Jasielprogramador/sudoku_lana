@@ -4,7 +4,6 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -17,7 +16,7 @@ import static java.util.stream.Collectors.toList;
 
 public class Reader {
 
-	private static Reader instance=new Reader();
+	private static final Reader instance=new Reader();
 
 	public void irakurri() {
 		// sudoku.txt fitxategia irakurri,
@@ -28,19 +27,21 @@ public class Reader {
 			FileReader fr = new FileReader(fitxategi);
 			BufferedReader br = new BufferedReader(fr);
 
-			String unekoLerroa="";
+			String unekoLerroa;
 
 			while((unekoLerroa=br.readLine())!=null){
 				System.out.println(unekoLerroa);
 
-				if (unekoLerroa.equals("1")){
-					SudokuLib.getInstance().sudokuaGorde("1",br);
-				}
-				else if(unekoLerroa.equals("2")){
-					SudokuLib.getInstance().sudokuaGorde("2",br);
-				}
-				else if(unekoLerroa.equals("3")){
-					SudokuLib.getInstance().sudokuaGorde("3",br);
+				switch (unekoLerroa) {
+					case "1":
+						SudokuLib.getInstance().sudokuaGorde("1", br);
+						break;
+					case "2":
+						SudokuLib.getInstance().sudokuaGorde("2", br);
+						break;
+					case "3":
+						SudokuLib.getInstance().sudokuaGorde("3", br);
+						break;
 				}
 			}
 

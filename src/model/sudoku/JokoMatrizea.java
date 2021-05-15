@@ -19,9 +19,9 @@ public class JokoMatrizea extends Observable {
     private int maila;
 
 
-    private Gelaxka[][] sudoku = new Gelaxka[9][9];
+    private final Gelaxka[][] sudoku = new Gelaxka[9][9];
 
-    private static JokoMatrizea instantzia = new JokoMatrizea();
+    private static final JokoMatrizea instantzia = new JokoMatrizea();
 
     private JokoMatrizea() {
 
@@ -92,7 +92,7 @@ public class JokoMatrizea extends Observable {
     private ArrayList<Integer> hasierakoHautagaienListaLortu(boolean[] lista) {
         ArrayList<Integer> emaitza = new ArrayList<>();
         for (int i = 0; i < lista.length; i++) {
-            if (lista[i] == false) {
+            if (!lista[i]) {
                 emaitza.add(i + 1);
             }
         }

@@ -2,8 +2,6 @@ package model.ranking;
 
 import model.modelutils.Reader;
 
-import java.time.chrono.Era;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,9 +11,9 @@ public class Session {
 
     private String erabIzena;
 
-    private List<Erabiltzaile> listaErab=new ArrayList<>();
+    private final List<Erabiltzaile> listaErab;
 
-    private static Session instantzia = new Session();
+    private static final Session instantzia = new Session();
 
 
 
@@ -55,7 +53,7 @@ public class Session {
     }
 
     private String toStringLehena(){
-        return getMaila(0)+"-"+getPuntuazioa(0)+"-"+getIzena(0);
+        return getMaila(0)+"-"+getPuntuazioa(0)+"-"+erabIzena;
     }
 
 
@@ -64,7 +62,11 @@ public class Session {
 
     public List<Erabiltzaile> ordenatu(){
         return listaErab.stream()
-                .sorted(comparing(Erabiltzaile::getPuntuazioa).reversed())
+                .sorted(comparing(Erabiltzaile::getMaila)
+                        .reversed()  //mailataz ordenatzea handienetik txik
+                        .thenComparing(Erabiltzaile::getPuntuazioa)
+                        .reversed()  //puntuz ordenatu hand-txik
+                )
                 .collect(Collectors.toList());
     }
 
