@@ -15,7 +15,7 @@ public class RankingGUI extends JFrame {
     public RankingGUI(List<Erabiltzaile> ordenatuta) throws FileNotFoundException {
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 500, 300);
+        setBounds(100, 100, 950, 550);
 
         String[][] data = new String[50][50];
 

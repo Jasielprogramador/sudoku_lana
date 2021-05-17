@@ -87,7 +87,7 @@ public class SudokuGUI extends JFrame implements Observer {
 
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 950, 550);
 		setVisible(false);
 	}
 
@@ -443,7 +443,7 @@ public class SudokuGUI extends JFrame implements Observer {
 			case UNIQUE_PISTA:
 				int [] emaitza2= (int[]) lista.get(1);
 				textArea.append("Unique candidate estrategia: \n" +
-						"Gelaxka (↓"+emaitza2[1]+", →"+emaitza2[2]+") \n" +
+						"Gelaxka (↓"+(emaitza2[1]+1)+", →"+(emaitza2[2]+1)+") \n" +
 						"Balioa "+emaitza2[0]);
 				break;
 
